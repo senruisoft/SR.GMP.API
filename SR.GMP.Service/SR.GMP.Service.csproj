@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SR.GMP.Common\SR.GMP.Common.csproj" />
+    <ProjectReference Include="..\SR.GMP.DataEntity\SR.GMP.DataEntity.csproj" />
+    <ProjectReference Include="..\SR.GMP.EFCore\SR.GMP.EFCore.csproj" />
+    <ProjectReference Include="..\SR.GMP.Infrastructure\SR.GMP.Infrastructure.csproj" />
+    <ProjectReference Include="..\SR.GMP.Service.Contracts\SR.GMP.Service.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
