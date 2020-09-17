@@ -8,7 +8,7 @@ namespace SR.GMP.DataEntity.ViewModel
     /// <summary>
     /// 床位/患者/医护数量信息
     /// </summary>
-    public class BaseCountInfo : IHasCenterInfo<string>
+    public class BaseCountView : IHasCenterInfo<string>
     {
         /// <summary>
         /// 床位数
@@ -39,7 +39,7 @@ namespace SR.GMP.DataEntity.ViewModel
     /// <summary>
     /// 设备信息
     /// </summary>
-    public class EquipmentCountInfo : IHasCenterInfo<string>
+    public class EquipmentCountView : IHasCenterInfo<string>
     {
         /// <summary>
         /// 设备名称
@@ -54,7 +54,7 @@ namespace SR.GMP.DataEntity.ViewModel
         /// <summary>
         /// 设备数量
         /// </summary>
-        public string EquipmentCount { get; set; }
+        public int EquipmentCount { get; set; }
 
         public string CENT_ID { get; set; }
     }
@@ -62,7 +62,7 @@ namespace SR.GMP.DataEntity.ViewModel
     /// <summary>
     /// 患者数量统计信息
     /// </summary>
-    public class TreatmenCountInfo : IHasCenterInfo<string>
+    public class TreatmenCountView : IHasCenterInfo<string>
     {
         /// <summary>
         /// 总人数
@@ -95,7 +95,7 @@ namespace SR.GMP.DataEntity.ViewModel
     /// <summary>
     /// 治疗统计信息
     /// </summary>
-    public class TreatmentStatsInfo : IHasCenterInfo<string>
+    public class TreatmentStatsView : IHasCenterInfo<string>
     {
         /// <summary>
         /// 月份
@@ -113,12 +113,22 @@ namespace SR.GMP.DataEntity.ViewModel
     /// <summary>
     /// 在线治疗统计信息
     /// </summary>
-    public class OnlineTreatmentStatsInfo : IHasCenterInfo<string>
+    public class OnlineTreatmentStatsView : IHasCenterInfo<string>
     {
         /// <summary>
         /// 班次名称
         /// </summary>
         public string ClassName { get; set; }
+
+        /// <summary>
+        /// 班次ID
+        /// </summary>
+        public string ClassID { get; set; }
+
+        /// <summary>
+        /// 排序号
+        /// </summary>
+        public int SortNum { get; set; }
 
         /// <summary>
         /// 治疗总人数
@@ -128,7 +138,7 @@ namespace SR.GMP.DataEntity.ViewModel
         /// <summary>
         /// 治疗中人数
         /// </summary>
-        public int TreateingCount { get; set; }
+        public int TreatingCount { get; set; }
 
         public string CENT_ID { get; set; }
     }

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SR.GMP.API.Filter;
 using SR.GMP.EFCore;
 using SR.GMP.Infrastructure.Repositories;
 using SR.GMP.Infrastructure.UnitOfWork;
@@ -34,6 +35,12 @@ namespace SR.GMP.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            // ≈‰÷√π˝¬À∆˜
+            services.AddMvc(mvcOptions =>
+            {
+                mvcOptions.Filters.Add<GlobalExceptionFilterAttribute>();
+                mvcOptions.Filters.Add<GlobalResultFilterAttribute>();
+            });
 
             #region swagger
             services.AddSwaggerGen(c =>
@@ -41,7 +48,9 @@ namespace SR.GMP.API
                 c.SwaggerDoc("GMP", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "GMP API", Version = "v1" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                var xmlPath_Service = Path.Combine(AppContext.BaseDirectory, "SR.GMP.Service.Contracts.xml");
                 c.IncludeXmlComments(xmlPath);
+                c.IncludeXmlComments(xmlPath_Service);
             });
             #endregion
 
@@ -49,7 +58,7 @@ namespace SR.GMP.API
             services.AddDbContext<GMPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GMPContext")));
 
             // ≈‰÷√AutoMapper
-            services.AddAutoMapper(Assembly.Load("SR.GMP.Service"));
+            services.AddAutoMapper(Assembly.Load("SR.GMP.Service.Contracts"));
         }
 
         /// <summary>

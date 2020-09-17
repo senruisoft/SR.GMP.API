@@ -44,6 +44,7 @@ namespace SR.GMP.EFCore
         {
             base.OnModelCreating(modelBuilder);
 
+            #region 测试数据
             modelBuilder.Entity<SYS_INST>().HasData(new SYS_INST
             {
                 CODE = "0010",
@@ -57,6 +58,7 @@ namespace SR.GMP.EFCore
                 NAME = "苏北人民医院中心",
                 INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
                 ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
+                EXT_ID = "0010",
             });
 
             modelBuilder.Entity<SYS_USER>().HasData(new SYS_USER
@@ -125,13 +127,45 @@ namespace SR.GMP.EFCore
                 RULE_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
                 MIN_VALUE = 100
             });
+            #endregion
 
-
+            #region 视图模型映射
             modelBuilder.Entity<MonitorViewData>(entity =>
             {
                 entity.HasNoKey();
                 entity.ToView("view_HD_MONITORING");
             });
+
+            modelBuilder.Entity<BaseCountView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_BaseCountInfo");
+            });
+
+            modelBuilder.Entity<EquipmentCountView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_EquipmentCountInfo");
+            });
+
+            modelBuilder.Entity<TreatmenCountView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_TreatmenCountInfo");
+            });
+
+            modelBuilder.Entity<TreatmentStatsView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_TreatmentStatsInfo");
+            });
+
+            modelBuilder.Entity<OnlineTreatmentStatsView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_OnlineTreatmentStatsInfo");
+            });
+            #endregion
         }
 
         public override int SaveChanges()

@@ -41,12 +41,6 @@ namespace SR.GMP.Service.Test
 
         public string test() 
         {
-            //repository.Add(new GMP_ALARM_ITEM
-            //{
-            //    ITEM_NAME = "报警项目2",
-            //    PRIORITY = DataEntity.DictEnum.PriorityEnum.中,
-            //    CENT_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
-            //});
 
 
             var result = unitOfWork.Commit();

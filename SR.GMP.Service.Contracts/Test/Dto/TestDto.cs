@@ -8,4 +8,9 @@ namespace SR.GMP.Service.Contracts.Test.Dto
     {
         public string id { get; set; }
     }
+
+    public class Test2Dto
+    {
+        public string id { get; set; }
+    }
 }

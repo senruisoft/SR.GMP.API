@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SR.GMP.EFCore", "SR.GMP.EFC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SR.GMP.Infrastructure", "SR.GMP.Infrastructure\SR.GMP.Infrastructure.csproj", "{A3CA27F0-0C4D-4006-A33D-1B2C9C3C993C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SR.GMP.WorkerService", "SR.GMP.WorkerService\SR.GMP.WorkerService.csproj", "{D5F009F8-733D-4218-B5CB-E2D99598E3F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A3CA27F0-0C4D-4006-A33D-1B2C9C3C993C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3CA27F0-0C4D-4006-A33D-1B2C9C3C993C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3CA27F0-0C4D-4006-A33D-1B2C9C3C993C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F009F8-733D-4218-B5CB-E2D99598E3F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F009F8-733D-4218-B5CB-E2D99598E3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F009F8-733D-4218-B5CB-E2D99598E3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F009F8-733D-4218-B5CB-E2D99598E3F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

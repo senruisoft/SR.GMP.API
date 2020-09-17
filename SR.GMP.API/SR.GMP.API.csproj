@@ -26,7 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SR.GMP.Common\SR.GMP.Common.csproj" />
     <ProjectReference Include="..\SR.GMP.EFCore\SR.GMP.EFCore.csproj" />
-    <ProjectReference Include="..\SR.GMP.Service.Contracts\SR.GMP.Service.Contracts.csproj" />
+    <ProjectReference Include="..\SR.GMP.Infrastructure\SR.GMP.Infrastructure.csproj" />
     <ProjectReference Include="..\SR.GMP.Service\SR.GMP.Service.csproj" />
   </ItemGroup>
 

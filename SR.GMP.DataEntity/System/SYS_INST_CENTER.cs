@@ -61,5 +61,11 @@ namespace SR.GMP.DataEntity.System
         /// 类型编码
         /// </summary>
         public CenterTypeEnum TYPE_CODE { get; set; }
+
+        /// <summary>
+        /// 外部ID
+        /// </summary>
+        [StringLength(128)]
+        public string EXT_ID { get; set; }
     }
 }
