@@ -75,7 +75,6 @@ namespace SR.GMP.API.Controllers.Monitor
         {
             return await dataService.GetOnlineTreatmentStatsInfo(cent_id);
         }
-
     }
 
 }

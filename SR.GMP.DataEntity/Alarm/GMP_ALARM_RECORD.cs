@@ -12,7 +12,7 @@ namespace SR.GMP.DataEntity.Alarm
     /// <summary>
     /// 报警记录表
     /// </summary>
-    public class GMP_ALARM_RECORD : Entity<Guid>
+    public class GMP_ALARM_RECORD : Entity<Guid>, IHasCenterInfo<Guid>
     {
         public GMP_ALARM_RECORD() 
         {
@@ -87,11 +87,6 @@ namespace SR.GMP.DataEntity.Alarm
         public string ALARM_INFO { get; set; }
 
         /// <summary>
-        /// 中心Code
-        /// </summary>
-        public string CENT_CODE { get; set; }
-
-        /// <summary>
         /// 数据记录时间
         /// </summary>
         public DateTime DATA_RECORD_TIME { get; set; }
@@ -110,5 +105,15 @@ namespace SR.GMP.DataEntity.Alarm
         /// 创建时间
         /// </summary>
         public DateTime CREATE_AT { get; set; }
+
+        /// <summary>
+        /// 中心ID
+        /// </summary>
+        public Guid CENT_ID { get; set; }
+
+        /// <summary>
+        /// 班次ID
+        /// </summary>
+        public string CLASS_ID { get; set; }
     }
 }

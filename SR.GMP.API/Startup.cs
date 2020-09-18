@@ -8,6 +8,7 @@ using Autofac;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,7 @@ namespace SR.GMP.API
             // ≈‰÷√π˝¬À∆˜
             services.AddMvc(mvcOptions =>
             {
+                mvcOptions.Filters.Add<LogFilterAttribute>();
                 mvcOptions.Filters.Add<GlobalExceptionFilterAttribute>();
                 mvcOptions.Filters.Add<GlobalResultFilterAttribute>();
             });
@@ -59,6 +61,7 @@ namespace SR.GMP.API
 
             // ≈‰÷√AutoMapper
             services.AddAutoMapper(Assembly.Load("SR.GMP.Service.Contracts"));
+
         }
 
         /// <summary>
@@ -94,6 +97,13 @@ namespace SR.GMP.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            // ∂¡»°RequestµƒBody¡˜
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
 
             app.UseAuthorization();
 

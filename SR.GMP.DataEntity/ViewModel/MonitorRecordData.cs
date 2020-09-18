@@ -43,6 +43,11 @@ namespace SR.GMP.DataEntity.ViewModel
         public string NURSE_NAME { get; set; }
 
         /// <summary>
+        /// 班次ID
+        /// </summary>
+        public string CLASS_ID { get; set; }
+
+        /// <summary>
         /// 记录时间
         /// </summary>
         public DateTime RECORD_TIME { get; set; }

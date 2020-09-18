@@ -36,8 +36,6 @@ namespace SR.GMP.EFCore
         public DbSet<SYS_DICT_CATEGORY> SYS_DICT_CATEGORY { get; set; }
         public DbSet<SYS_DICT_ITEM> SYS_DICT_ITEM { get; set; }
 
-        //public virtual DbSet<PatientInfo> PatientInfo { get; set; }
-
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -181,5 +179,6 @@ namespace SR.GMP.EFCore
 
             return base.SaveChanges();
         }
+
     }
 }

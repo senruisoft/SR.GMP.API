@@ -190,7 +190,7 @@ namespace SR.GMP.Service.Test
                                                      NURSE_NAME = data.NURSE_NAME,
                                                      ALARM_ITEM_NAME = item.ITEM_NAME,
                                                      PRIORITY = item.PRIORITY,
-                                                     CENT_CODE = cent_code,
+                                                     //CENT_CODE = cent_code,
                                                      DATA_RECORD_TIME = monitordata.Select(x => x.RECORD_TIME).Min(),
                                                      CREATE_AT = DateTime.Now
                                                  }).ToList();
@@ -214,7 +214,7 @@ namespace SR.GMP.Service.Test
                                                   NURSE_NAME = data.NURSE_NAME,
                                                   ALARM_ITEM_NAME = item.ITEM_NAME,
                                                   PRIORITY = item.PRIORITY,
-                                                  CENT_CODE = cent_code,
+                                                  //CENT_CODE = cent_code,
                                                   DATA_RECORD_TIME = eventdata.Select(x => x.RECORD_TIME).Min(),
                                                   CREATE_AT = DateTime.Now
                                               }).ToList();
@@ -239,7 +239,7 @@ namespace SR.GMP.Service.Test
                         NURSE_NAME = x.First().NURSE_NAME,
                         ALARM_ITEM_NAME = item.ITEM_NAME,
                         PRIORITY = item.PRIORITY,
-                        CENT_CODE = cent_code,
+                        //CENT_CODE = cent_code,
                         DATA_RECORD_TIME = x.Select(x => x.RECORD_TIME).Min(),
                         CREATE_AT = DateTime.Now
                     }));
