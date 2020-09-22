@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using SR.GMP.DataEntity.Alarm;
 using SR.GMP.DataEntity.ViewModel;
+using SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig;
 using SR.GMP.Service.Contracts.Monitor.Dto.StatisticData;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,9 @@ namespace SR.GMP.Service.Contracts.AutoMapper
             CreateMap<TreatmenCountView, TreatmenCountInfo>().ReverseMap();
             CreateMap<TreatmentStatsView, TreatmentStatsInfo>().ReverseMap();
             CreateMap<OnlineTreatmentStatsView, OnlineTreatmentStatsInfo>().ReverseMap();
+
+
+            CreateMap<GMP_ALARM_ITEM, AlarmItemDto>().ReverseMap();
         }
     }
 }

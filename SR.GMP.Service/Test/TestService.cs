@@ -6,7 +6,6 @@ using SR.GMP.DataEntity.System;
 using SR.GMP.DataEntity.ViewModel;
 using SR.GMP.EFCore;
 using SR.GMP.Infrastructure.Repositories;
-using SR.GMP.Infrastructure.Repositories.Alarm;
 using SR.GMP.Infrastructure.UnitOfWork;
 using SR.GMP.Service.Contracts.Test;
 using SR.GMP.Service.Contracts.Test.Dto;

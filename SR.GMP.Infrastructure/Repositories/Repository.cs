@@ -183,7 +183,7 @@ namespace SR.GMP.Infrastructure.Repositories
 
         public virtual async Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            return await _dbContext.FindAsync<TEntity>(id, cancellationToken);
+            return await _dbContext.FindAsync<TEntity>(new object[] { id }, cancellationToken);
         }
     }
 }
