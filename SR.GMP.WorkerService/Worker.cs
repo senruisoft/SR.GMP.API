@@ -13,7 +13,7 @@ namespace SR.GMP.WorkerService
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger _logger;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private DateTime checkTime;
         IJob _job;

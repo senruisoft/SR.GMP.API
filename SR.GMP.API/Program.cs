@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
@@ -20,17 +21,18 @@ namespace SR.GMP.API
         public static void Main(string[] args)
         {
             #region SeriLog配置
+            var LogRoot = Path.Combine(AppContext.BaseDirectory, "Logs/error/log.txt");
             Log.Logger = new LoggerConfiguration()
                       .MinimumLevel.Information()
                       .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
                       .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning) // 降低EF日志级别
                       .Enrich.FromLogContext()
                       // 写Error日志
-                      .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Error).WriteTo.Async(config => config.File("Logs/error/log.txt",
+                      .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Error).WriteTo.Async(config => config.File(Path.Combine(AppContext.BaseDirectory, "Logs/error/log.txt"),
                        outputTemplate: "{Timestamp:HH:mm} || {Level} || {SourceContext:l} || {Message} || end {NewLine}",
                        rollingInterval: RollingInterval.Day)))
                        // 写Information日志
-                       .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Information).WriteTo.Async(config => config.File("Logs/info/log.txt",
+                       .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Information).WriteTo.Async(config => config.File(Path.Combine(AppContext.BaseDirectory, "Logs/info/log.txt"),
                        outputTemplate: "{Timestamp:HH:mm} || {Level} || {SourceContext:l} || {Message} || end {NewLine}",
                        rollingInterval: RollingInterval.Day)))
                       .CreateLogger();
@@ -55,7 +57,7 @@ namespace SR.GMP.API
             }
             catch(Exception ex) 
             {
-                Log.Fatal(ex, "Host terminated unexpectedly!");
+                Log.Error(ex, "Host terminated unexpectedly!");
             }
             finally
             {

@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Panda.DynamicWebApi;
 using SR.GMP.API.Filter;
 using SR.GMP.EFCore;
 using SR.GMP.Infrastructure.Repositories;
@@ -36,23 +37,34 @@ namespace SR.GMP.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // ≈‰÷√∂ØÃ¨Api
+            services.AddDynamicWebApi(options => 
+            {
+                options.RemoveControllerPostfixes.Add("Service");
+            });
+
             // ≈‰÷√π˝¬À∆˜
             services.AddMvc(mvcOptions =>
             {
                 mvcOptions.Filters.Add<LogFilterAttribute>();
+                mvcOptions.Filters.Add<ModelValidFilterAttribute>();
                 mvcOptions.Filters.Add<GlobalExceptionFilterAttribute>();
                 mvcOptions.Filters.Add<GlobalResultFilterAttribute>();
             });
 
             #region swagger
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("GMP", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "GMP API", Version = "v1" });
+                options.SwaggerDoc("GMP", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "GMP API", Version = "v1" });
+                options.DocInclusionPredicate((docName, description) => true);
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                var xmlPath_Service = Path.Combine(AppContext.BaseDirectory, "SR.GMP.Service.Contracts.xml");
-                c.IncludeXmlComments(xmlPath);
-                c.IncludeXmlComments(xmlPath_Service);
+                var xmlPath_Service = Path.Combine(AppContext.BaseDirectory, "SR.GMP.Service.xml");
+                var xmlPath_Service_Contracts = Path.Combine(AppContext.BaseDirectory, "SR.GMP.Service.Contracts.xml");
+                options.IncludeXmlComments(xmlPath);
+                options.IncludeXmlComments(xmlPath_Service);
+                options.IncludeXmlComments(xmlPath_Service_Contracts);
             });
             #endregion
 
@@ -61,7 +73,6 @@ namespace SR.GMP.API
 
             // ≈‰÷√AutoMapper
             services.AddAutoMapper(Assembly.Load("SR.GMP.Service.Contracts"));
-
         }
 
         /// <summary>

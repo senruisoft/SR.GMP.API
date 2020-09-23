@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SR.GMP.DataEntity.Alarm;
 using SR.GMP.Infrastructure.Repositories;
 using SR.GMP.Infrastructure.Repositories.Alarm;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace SR.GMP.Service.Monitor
 {
-    public class AlarmConfigService : CrudAppService<GMP_ALARM_ITEM, Guid, AlarmItemDto, AlarmItemDto, GMP_ALARM_ITEM, GMP_ALARM_ITEM, GMP_ALARM_ITEM>
+    public class AlarmConfigService : CrudAppService<GMP_ALARM_ITEM, Guid, AlarmItemDto, AlarmItemCreatInput, AlarmItemCreatInput>
         , IAlarmConfigService
     {
         public AlarmConfigService(IMapper _mapper, IUnitOfWork unitOfWork, IAlarmRepository repository) 
@@ -23,6 +24,5 @@ namespace SR.GMP.Service.Monitor
             
         }
 
-        
     }
 }

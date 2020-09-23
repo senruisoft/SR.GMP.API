@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,6 +52,13 @@ namespace SR.GMP.Infrastructure.Repositories
         public virtual Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(Update(entity));
+        }
+
+        public virtual TEntity Update(TEntity oriEntity, object entity)
+        {
+            _dbContext.Entry(oriEntity).State = EntityState.Unchanged;
+            _dbContext.Entry(oriEntity).CurrentValues.SetValues(entity);
+            return oriEntity;
         }
         #endregion
 
@@ -106,7 +114,7 @@ namespace SR.GMP.Infrastructure.Repositories
         /// <param name="query">查询条件</param>
         /// <param name="tracking">是否启用跟踪</param>
         /// <returns></returns>
-        public virtual IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> query = null, bool tracking = true)
+        public virtual IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> query, bool tracking = true)
         {
             return tracking ? _dbContext.Set<TEntity>().Where(query) : _dbContext.Set<TEntity>().Where(query).AsNoTracking();
         }
@@ -140,17 +148,16 @@ namespace SR.GMP.Infrastructure.Repositories
         {
         }
 
-        public virtual void InsertOrUpdate(TEntity entity)
+        public virtual TEntity InsertOrUpdate(TKey ID ,object entity)
         {
-            var oriEntity = Find(entity.ID);
+            var oriEntity = Find(ID);
             if (oriEntity != null)
             {
-                _dbContext.Entry(oriEntity).State = EntityState.Unchanged;
-                _dbContext.Entry(oriEntity).CurrentValues.SetValues(entity);
+                return Update(oriEntity, entity);
             }
             else 
             {
-                Add(entity);
+                return Add(entity as TEntity);
             }
         }
 
@@ -167,7 +174,7 @@ namespace SR.GMP.Infrastructure.Repositories
 
         public virtual async Task<bool> RemoveAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            var entity = await _dbContext.FindAsync<TEntity>(id, cancellationToken);
+            var entity = await _dbContext.FindAsync<TEntity>(new object[] { id }, cancellationToken);
             if (entity == null)
             {
                 return false;

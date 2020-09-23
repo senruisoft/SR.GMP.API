@@ -7,7 +7,8 @@ using System.Text;
 
 namespace SR.GMP.Service.Contracts.Monitor
 {
-    public interface IAlarmConfigService : ICrudService<Guid, AlarmItemDto, AlarmItemDto, GMP_ALARM_ITEM, GMP_ALARM_ITEM, GMP_ALARM_ITEM>
+    public interface IAlarmConfigService : ICrudService<Guid, AlarmItemDto, AlarmItemCreatInput, AlarmItemCreatInput>
     {
+
     }
 }

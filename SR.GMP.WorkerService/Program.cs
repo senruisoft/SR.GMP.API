@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +20,16 @@ namespace SR.GMP.WorkerService
     {
         public static void Main(string[] args)
         {
+            var LogRoot = Path.Combine(AppContext.BaseDirectory, "Logs/log.txt");
             // Serilog配置
             Log.Logger = new LoggerConfiguration()
                       .MinimumLevel.Information()
                       .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                       .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning) // 降低EF日志级别
-                      .Enrich.FromLogContext()                         
+                      .Enrich.FromLogContext()
                       .WriteTo.Console()
                       //.WriteTo.File("Logs\\log.txt", rollingInterval: RollingInterval.Day)
-                      .WriteTo.Async(config => config.File("Logs/log.txt",
+                      .WriteTo.Async(config => config.File(LogRoot,
                        outputTemplate: "{Timestamp:HH:mm} || {Level} || {SourceContext:l} || {Message} || end {NewLine}",
                        rollingInterval: RollingInterval.Day))
                       .CreateLogger();
@@ -48,11 +50,18 @@ namespace SR.GMP.WorkerService
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
                     services.AddDbContext<GMPContext>(options => options.UseSqlServer(hostContext.Configuration.GetConnectionString("GMPContext")));
                     services.AddSingleton<IJob, AlarmCheckJob>();
-                }).UseSerilog(dispose: true);
+                })
+                .UseSerilog(dispose: true)
+                //.ConfigureLogging((context, logging) => 
+                //{
+                //    logging.AddLog4Net();
+                //})
+                .UseWindowsService();
     }
 }

@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SR.GMP.EFCore
 {
@@ -134,6 +136,12 @@ namespace SR.GMP.EFCore
                 entity.ToView("view_HD_MONITORING");
             });
 
+            modelBuilder.Entity<EventViewData>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_HD_EVENT");
+            });
+
             modelBuilder.Entity<BaseCountView>(entity =>
             {
                 entity.HasNoKey();
@@ -166,18 +174,30 @@ namespace SR.GMP.EFCore
             #endregion
         }
 
-        public override int SaveChanges()
+        /// <summary>
+        /// 保存创建信息和修改信息
+        /// </summary>
+        private void Save() 
         {
             //添加操作
-            ChangeTracker.Entries().Where(e => e.State == EntityState.Added && e.Entity is IHasCreationInfo).ToList()
+            ChangeTracker.Entries().Where(e => e.Entity is IHasCreationInfo && e.State == EntityState.Added).ToList()
                 .ForEach(e => ((IHasCreationInfo)e.Entity).CREATE_AT = DateTime.Now);
 
             //修改操作
-            ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is IHasModificationInfo).ToList()
-                .ForEach(e => ((IHasModificationInfo)e.Entity).MODIFY_AT = DateTime.Now);
+            ChangeTracker.Entries().Where(e => e.Entity is IHasModificationInfo && e.State == EntityState.Modified).ToList()
+              .ForEach(e => ((IHasModificationInfo)e.Entity).MODIFY_AT = DateTime.Now);
+        }
 
-
+        public override int SaveChanges()
+        {
+            Save();
             return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            Save();
+            return base.SaveChangesAsync(cancellationToken);
         }
 
     }

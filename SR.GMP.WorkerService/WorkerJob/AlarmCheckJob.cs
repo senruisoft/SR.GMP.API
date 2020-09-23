@@ -69,7 +69,7 @@ namespace SR.GMP.WorkerService.WorkerJob
                 monitorItemList = monitorItemList.Distinct().ToList();
 
                 List<MonitorRecordData> RecordDataList = new List<MonitorRecordData>();
-                if (monitorItemList.Count == -1)
+                if (monitorItemList.Count > 0)
                 {
                     #region 构造报警配置项目的监测数据集合
                     // 查询监测实时数据
@@ -80,9 +80,9 @@ namespace SR.GMP.WorkerService.WorkerJob
                         DateTime? end = item.Max(x => x.RECORD_TIME);
                         DateTime? begin = end.HasValue ? end.Value.Date : end;
                         var orgData = item.OrderByDescending(x => x.RECORD_TIME).ToList();
-                    // 查询用于计算前后数据差的监测数据
-                    var lastData = dbcontext.Set<MonitorViewData>().Where(x => x.CENT_ID == center.EXT_ID && x.PATIENT_ID == item.Key
-                            && x.RECORD_TIME < end && x.RECORD_TIME >= begin).OrderByDescending(x => x.RECORD_TIME).Take(count).ToList();
+                        // 查询用于计算前后数据差的监测数据
+                        var lastData = dbcontext.Set<MonitorViewData>().Where(x => x.CENT_ID == center.EXT_ID && x.PATIENT_ID == item.Key
+                                && x.RECORD_TIME < end && x.RECORD_TIME >= begin).OrderByDescending(x => x.RECORD_TIME).Take(count).ToList();
                         for (int i = 0; i < orgData.Count; i++)
                         {
                             Dictionary<string, decimal?> dict = new Dictionary<string, decimal?>();
@@ -90,8 +90,8 @@ namespace SR.GMP.WorkerService.WorkerJob
                             {
                                 var orgValue = orgData[i].GetType().GetProperty(monitorItem).GetValue(orgData[i]);
                                 dict[monitorItem] = orgValue == null ? default(decimal?) : (decimal)orgValue;
-                            // 计算前后差值
-                            if (lastData.Count - 1 >= i)
+                                // 计算前后差值
+                                if (lastData.Count - 1 >= i)
                                 {
                                     var lastValue = lastData[i].GetType().GetProperty(monitorItem).GetValue(lastData[i]);
                                     dict[monitorItem + "_diff"] = lastValue == null ? default(decimal?) : (decimal)lastValue - dict[monitorItem];
@@ -121,8 +121,10 @@ namespace SR.GMP.WorkerService.WorkerJob
                 // 是否存在临床事件项目报警配置
                 bool hasEventAlarm = AlarmItems.Any(x => x.ALARM_ITEM_RULE_LIST.Where(x => !string.IsNullOrEmpty(x.EVENT_ITEM_CODE)).Count() > 0);
                 // 查询临床事件记录
+                DateTime nowDate = LastCheckTime.Date;
+                DateTime endDate = LastCheckTime.Date.AddDays(1);
                 List<EventViewData> EventDataList = !hasEventAlarm ? new List<EventViewData>() :
-                    dbcontext.Set<EventViewData>().Where(x => x.CENT_ID == center.EXT_ID).ToList();
+                    dbcontext.Set<EventViewData>().Where(x => x.CENT_ID == center.EXT_ID && x.CREATE_AT >= nowDate && x.CREATE_AT < endDate).ToList();
 
                 // 遍历报警配置项目
                 foreach (var item in AlarmItems)
@@ -266,7 +268,7 @@ namespace SR.GMP.WorkerService.WorkerJob
                 if (alarmRecordList.Count > 0)
                 {
                     // 过滤重复未处理的报警
-                    DateTime nowDate = LastCheckTime.Date;
+                    //DateTime nowDate = LastCheckTime.Date;
                     var recordList = dbcontext.GMP_ALARM_RECORD.Where(x => x.CENT_ID == center.ID && x.CREATE_AT >= nowDate && x.STATE != AlarmStateEnum.已处理).ToList();
                     var InsertRecord = from alarm in alarmRecordList
                                        join record in recordList

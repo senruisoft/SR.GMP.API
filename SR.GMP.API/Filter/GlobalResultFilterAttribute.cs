@@ -20,7 +20,10 @@ namespace SR.GMP.API.Filter
             if (context.Filters.Where(filter => filter.GetType() == typeof(CrossResultPackAttribute)).Count() == 0) 
             {
                 var result = context.Result as ObjectResult;
-                result.Value = ApiResult.GetSuccess(result.Value);
+                if (result != null && !(result.Value is ApiResult)) 
+                {
+                    result.Value = ApiResult.GetSuccess(result.Value);
+                }
             }
         }
     }
