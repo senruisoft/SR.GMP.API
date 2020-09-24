@@ -22,7 +22,7 @@ namespace SR.GMP.Service.Monitor
         GMPContext dbcontext;
         IRepository<SYS_INST_CENTER, Guid> centRepository;
 
-        public StatisticsDataService(IMapper _mapper, GMPContext dbcontext, IRepository<SYS_INST_CENTER, Guid> centRepository) 
+        public StatisticsDataService(IMapper _mapper, GMPContext dbcontext, IRepository<SYS_INST_CENTER, Guid> centRepository)
         {
             this.dbcontext = dbcontext;
             this.centRepository = centRepository;
@@ -34,10 +34,10 @@ namespace SR.GMP.Service.Monitor
         /// </summary>
         /// <param name="cent_id">中心ID</param>
         /// <returns></returns>
-        public async Task<BaseCountInfo> GetBaseCountInfo(Guid cent_id) 
+        public async Task<BaseCountInfo> GetBaseCountInfo(Guid cent_id)
         {
             var center = centRepository.Find(cent_id);
-            if (center == null) 
+            if (center == null)
             {
                 throw new ServerException("中心信息错误！");
             }
@@ -62,38 +62,6 @@ namespace SR.GMP.Service.Monitor
         }
 
         /// <summary>
-        /// 查询患者数量统计信息
-        /// </summary>
-        /// <param name="cent_id">中心ID</param>
-        /// <returns></returns>
-        public async Task<TreatmenCountInfo> GetTreatmenCountInfo(Guid cent_id)
-        {
-            var center = centRepository.Find(cent_id);
-            if (center == null)
-            {
-                throw new ServerException("中心信息错误！");
-            }
-            var result = await dbcontext.Set<TreatmenCountView>().Where(x => x.CENT_ID == center.EXT_ID).FirstOrDefaultAsync();
-            return _mapper.Map<TreatmenCountView, TreatmenCountInfo>(result);
-        }
-
-        /// <summary>
-        /// 查询治疗统计信息
-        /// </summary>
-        /// <param name="cent_id">中心ID</param>
-        /// <returns></returns>
-        public async Task<List<TreatmentStatsInfo>> GetTreatmentStatsInfo(Guid cent_id)
-        {
-            var center = centRepository.Find(cent_id);
-            if (center == null)
-            {
-                throw new ServerException("中心信息错误！");
-            }
-            var result = await dbcontext.Set<TreatmentStatsView>().Where(x => x.CENT_ID == center.EXT_ID).OrderBy(x => x.Month).ToListAsync();
-            return _mapper.Map<List<TreatmentStatsView>, List<TreatmentStatsInfo>>(result);
-        }
-
-        /// <summary>
         /// 查询在线治疗统计信息
         /// </summary>
         /// <param name="cent_id">中心ID</param>
@@ -107,6 +75,34 @@ namespace SR.GMP.Service.Monitor
             }
             var result = await dbcontext.Set<OnlineTreatmentStatsView>().Where(x => x.CENT_ID == center.EXT_ID).OrderBy(x => x.SortNum).ToListAsync();
             return _mapper.Map<List<OnlineTreatmentStatsView>, List<OnlineTreatmentStatsInfo>>(result);
+        }
+
+
+        /// <summary>
+        /// 查询今年新增患者人数
+        /// </summary>
+        /// <param name="cent_id">中心ID</param>
+        /// <param name="type">查询类型</param>
+        public async Task<StatsInfo> GetNewPatientInfo(Guid cent_id, string type) 
+        {
+            var center = centRepository.Find(cent_id);
+            if (center == null)
+            {
+                throw new ServerException("中心信息错误！");
+            }
+            switch (type) 
+            {
+                case "":
+                    break;
+            }
+            var TreatmenCount =  await dbcontext.TreatmenCountView.FromSqlInterpolated($"select * from  dbo.view_YearNewPatientCountInfo where CENT_ID = {center.EXT_ID}").ToListAsync();
+            var TreatmentStats = await dbcontext.TreatmentStatsView.FromSqlInterpolated($"select * from  dbo.view_YearNewPatientMonthlyCountInfo where CENT_ID = {center.EXT_ID} order by Month").ToListAsync();
+            var result = new StatsInfo 
+            {
+                treatmenCountInfo = _mapper.Map<TreatmenCountView, TreatmenCountInfo>(TreatmenCount.FirstOrDefault()),
+                treatmentStatsInfo = _mapper.Map< List<TreatmentStatsView>, List<TreatmentStatsInfo>>(TreatmentStats)
+            };
+            return result;
         }
     }
 }

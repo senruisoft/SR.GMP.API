@@ -45,27 +45,6 @@ namespace SR.GMP.API.Controllers.Monitor
         }
 
         /// <summary>
-        /// 查询患者数量统计信息
-        /// </summary>
-        /// <param name="cent_id">中心ID</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<TreatmenCountInfo> GetTreatmenCountInfo(Guid cent_id)
-        {
-            return await dataService.GetTreatmenCountInfo(cent_id);
-        }
-
-        /// <summary>
-        /// 查询治疗统计信息
-        /// </summary>
-        /// <param name="cent_id">中心ID</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<List<TreatmentStatsInfo>> GetTreatmentStatsInfo(Guid cent_id)
-        {
-            return await dataService.GetTreatmentStatsInfo(cent_id);
-        }
-        /// <summary>
         /// 查询在线治疗统计信息
         /// </summary>
         /// <param name="cent_id">中心ID</param>
@@ -74,6 +53,17 @@ namespace SR.GMP.API.Controllers.Monitor
         public async Task<List<OnlineTreatmentStatsInfo>> GetOnlineTreatmentStatsInfo(Guid cent_id)
         {
             return await dataService.GetOnlineTreatmentStatsInfo(cent_id);
+        }
+
+        /// <summary>
+        /// 查询今年新增患者人数
+        /// </summary>
+        /// <param name="cent_id">中心ID</param>
+        /// <param name="type">查询类型</param>
+        [HttpGet]
+        public async Task<StatsInfo> GetNewPatientInfo(Guid cent_id, string type)
+        {
+            return await dataService.GetNewPatientInfo(cent_id, type);
         }
     }
 

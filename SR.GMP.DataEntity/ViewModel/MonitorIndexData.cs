@@ -107,6 +107,9 @@ namespace SR.GMP.DataEntity.ViewModel
         /// </summary>
         public int Count { get; set; }
 
+        /// <summary>
+        /// 中心ID
+        /// </summary>
         public string CENT_ID { get; set; }
     }
 
@@ -128,7 +131,7 @@ namespace SR.GMP.DataEntity.ViewModel
         /// <summary>
         /// 排序号
         /// </summary>
-        public int SortNum { get; set; }
+        public string SortNum { get; set; }
 
         /// <summary>
         /// 治疗总人数
@@ -140,6 +143,14 @@ namespace SR.GMP.DataEntity.ViewModel
         /// </summary>
         public int TreatingCount { get; set; }
 
+        /// <summary>
+        /// 治疗完成人数
+        /// </summary>
+        public int CompleteCount { get; set; }
+
+        /// <summary>
+        /// 中心ID
+        /// </summary>
         public string CENT_ID { get; set; }
     }
 }

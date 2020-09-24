@@ -28,5 +28,10 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// 治疗中人数
         /// </summary>
         public int TreatingCount { get; set; }
+
+        /// <summary>
+        /// 治疗完成人数
+        /// </summary>
+        public int CompleteCount { get; set; }
     }
 }

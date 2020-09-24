@@ -38,8 +38,12 @@ namespace SR.GMP.API
         {
             services.AddControllers();
 
+            // 配置跨域处理，允许所有来源
+            services.AddCors(options => options.AddPolicy("cors", p => p.AllowAnyHeader().AllowAnyMethod()
+            .SetIsOriginAllowed(_ => true).AllowCredentials()));
+
             // 配置动态Api
-            services.AddDynamicWebApi(options => 
+            services.AddDynamicWebApi(options =>
             {
                 options.RemoveControllerPostfixes.Add("Service");
             });
@@ -105,6 +109,9 @@ namespace SR.GMP.API
                 app.UseDeveloperExceptionPage();
             }
 
+            // 允许所有跨域，cors是在ConfigureServices方法中配置的跨域策略名称
+            app.UseCors("cors");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -131,6 +138,8 @@ namespace SR.GMP.API
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }

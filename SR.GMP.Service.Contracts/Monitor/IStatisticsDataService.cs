@@ -25,24 +25,17 @@ namespace SR.GMP.Service.Contracts.Monitor
         Task<List<EquipmentCountInfo>> GetEquipmentCountInfo(Guid cent_id);
 
         /// <summary>
-        /// 查询患者数量统计信息
-        /// </summary>
-        /// <param name="cent_id">中心ID</param>
-        /// <returns></returns>
-        Task<TreatmenCountInfo> GetTreatmenCountInfo(Guid cent_id);
-
-        /// <summary>
-        /// 查询治疗统计信息
-        /// </summary>
-        /// <param name="cent_id">中心ID</param>
-        /// <returns></returns>
-        Task<List<TreatmentStatsInfo>> GetTreatmentStatsInfo(Guid cent_id);
-
-        /// <summary>
         /// 查询在线治疗统计信息
         /// </summary>
         /// <param name="cent_id">中心ID</param>
         /// <returns></returns>
         Task<List<OnlineTreatmentStatsInfo>> GetOnlineTreatmentStatsInfo(Guid cent_id);
+
+        /// <summary>
+        /// 查询今年新增患者人数
+        /// </summary>
+        /// <param name="cent_id">中心ID</param>
+        /// <param name="type">查询类型</param>
+        Task<StatsInfo> GetNewPatientInfo(Guid cent_id, string type);
     }
 }

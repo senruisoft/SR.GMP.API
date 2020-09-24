@@ -40,6 +40,11 @@ namespace SR.GMP.EFCore
 
         #endregion
 
+        #region 视图
+        public DbSet<TreatmenCountView> TreatmenCountView { get; set; }
+        public DbSet<TreatmentStatsView> TreatmentStatsView { get; set; }
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -154,23 +159,48 @@ namespace SR.GMP.EFCore
                 entity.ToView("view_EquipmentCountInfo");
             });
 
-            modelBuilder.Entity<TreatmenCountView>(entity =>
-            {
-                entity.HasNoKey();
-                entity.ToView("view_TreatmenCountInfo");
-            });
-
-            modelBuilder.Entity<TreatmentStatsView>(entity =>
-            {
-                entity.HasNoKey();
-                entity.ToView("view_TreatmentStatsInfo");
-            });
-
             modelBuilder.Entity<OnlineTreatmentStatsView>(entity =>
             {
                 entity.HasNoKey();
                 entity.ToView("view_OnlineTreatmentStatsInfo");
             });
+
+            modelBuilder.Entity<TreatmenCountView>(entity =>
+            {
+                entity.HasNoKey();
+
+            });
+
+            modelBuilder.Entity<TreatmentStatsView>(entity =>
+            {
+                entity.HasNoKey();
+            });
+
+
+            //modelBuilder.Entity<TreatmenCountView>(entity =>
+            //{
+            //    entity.HasNoKey();
+            //    entity.ToView("view_YearPatientCountInfo");
+            //});
+
+            //modelBuilder.Entity<TreatmentStatsView>(entity =>
+            //{
+            //    entity.HasNoKey();
+            //    entity.ToView("view_YearPatientMonthlyCountInfo");
+            //});
+
+            //modelBuilder.Entity<TreatmenCountView>(entity =>
+            //{
+            //    entity.HasNoKey();
+            //    entity.ToView("view_YearTreatCountInfo");
+            //});
+
+            //modelBuilder.Entity<TreatmentStatsView>(entity =>
+            //{
+            //    entity.HasNoKey();
+            //    entity.ToView("view_YearTreatMonthlyCountInfo");
+            //});
+
             #endregion
         }
 
