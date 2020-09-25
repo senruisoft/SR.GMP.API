@@ -10,8 +10,8 @@ using SR.GMP.EFCore;
 namespace SR.GMP.EFCore.Migrations
 {
     [DbContext(typeof(GMPContext))]
-    [Migration("20200925032834_add data")]
-    partial class adddata
+    [Migration("20200925092457_add test data")]
+    partial class addtestdata
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -693,43 +693,6 @@ namespace SR.GMP.EFCore.Migrations
                             PWD = "123456",
                             STATE = 1
                         });
-                });
-
-            modelBuilder.Entity("SR.GMP.DataEntity.ViewModel.TreatmenCountView", b =>
-                {
-                    b.Property<string>("CENT_ID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ManCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NegativeCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PositiveCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WomanCount")
-                        .HasColumnType("int");
-
-                    b.ToTable("TreatmenCountView");
-                });
-
-            modelBuilder.Entity("SR.GMP.DataEntity.ViewModel.TreatmentStatsView", b =>
-                {
-                    b.Property<string>("CENT_ID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.ToTable("TreatmentStatsView");
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.Alarm.GMP_ALARM_ITEM", b =>

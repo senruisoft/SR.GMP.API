@@ -57,7 +57,7 @@ namespace SR.GMP.WorkerService
                 {
                     _logger.LogError(ex.Message);
                 }
-                await Task.Delay(5000, stoppingToken);
+                await Task.Delay(50000, stoppingToken);
             }
         }
     }

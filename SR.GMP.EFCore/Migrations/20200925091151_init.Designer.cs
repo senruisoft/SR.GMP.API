@@ -10,7 +10,7 @@ using SR.GMP.EFCore;
 namespace SR.GMP.EFCore.Migrations
 {
     [DbContext(typeof(GMPContext))]
-    [Migration("20200925024141_init")]
+    [Migration("20200925091151_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,16 +62,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasIndex("MODIFIER_ID");
 
                     b.ToTable("GMP_ALARM_ITEM");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                            CENT_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
-                            ITEM_NAME = "报警项目1",
-                            PRIORITY = 1,
-                            STATE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.Alarm.GMP_ALARM_ITEM_RULE", b =>
@@ -124,28 +114,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasIndex("MODIFIER_ID");
 
                     b.ToTable("GMP_ALARM_ITEM_RULE");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                            ITEM_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                            LOGIC_TYPE = 0,
-                            MONITOR_ITEM_CODE = "VENOUS_PRESSURE",
-                            RULE_TYPE = 0,
-                            SORT_NUM = 0,
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
-                            ITEM_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                            LOGIC_TYPE = 0,
-                            MONITOR_ITEM_CODE = "ARTERIAL_PRESSURE",
-                            RULE_TYPE = 0,
-                            SORT_NUM = 0,
-                            STATE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.Alarm.GMP_ALARM_RECORD", b =>
@@ -271,39 +239,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasIndex("RULE_ID");
 
                     b.ToTable("GMP_ALARM_RULE_CONFIG");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                            IS_CONTAINMAX = false,
-                            IS_CONTAINMIN = false,
-                            IS_DIFFVALUE = false,
-                            MAX_VALUE = 120m,
-                            MIN_VALUE = 100m,
-                            RULE_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8314"),
-                            IS_CONTAINMAX = false,
-                            IS_CONTAINMIN = false,
-                            IS_DIFFVALUE = false,
-                            MAX_VALUE = 90m,
-                            RULE_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
-                            IS_CONTAINMAX = false,
-                            IS_CONTAINMIN = false,
-                            IS_DIFFVALUE = false,
-                            MIN_VALUE = 100m,
-                            RULE_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
-                            STATE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.Dictionary.GMP_EVENT_ITEM", b =>
@@ -332,15 +267,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("GMP_EVENT_ITEM");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            ITEM_CODE = "高血压",
-                            ITEM_NAME = "高血压",
-                            STATE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.Dictionary.GMP_MONITOR_ITEM", b =>
@@ -369,15 +295,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("GMP_MONITOR_ITEM");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            ITEM_CODE = "SYSTOLIC_BLOOD_PRESSURE",
-                            ITEM_NAME = "舒张压",
-                            STATE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.System.SYS_DICT_CATEGORY", b =>
@@ -527,15 +444,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasIndex("MODIFIER_ID");
 
                     b.ToTable("SYS_INST");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
-                            CODE = "0010",
-                            NAME = "仁济医院",
-                            STATE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.System.SYS_INST_CENTER", b =>
@@ -600,28 +508,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasIndex("MODIFIER_ID");
 
                     b.ToTable("SYS_INST_CENTER");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
-                            CODE = "0010",
-                            EXT_ID = "cd20937a-24b2-455c-91c9-0df498c581b2",
-                            INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
-                            NAME = "仁济东院",
-                            STATE = 1,
-                            TYPE_CODE = 1
-                        },
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8363"),
-                            CODE = "0010",
-                            EXT_ID = "0010",
-                            INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
-                            NAME = "仁济西院",
-                            STATE = 1,
-                            TYPE_CODE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.System.SYS_USER", b =>
@@ -674,17 +560,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasIndex("MODIFIER_ID");
 
                     b.ToTable("SYS_USER");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                            ACCOUNT = "admin",
-                            GENDER = 0,
-                            NAME = "admin",
-                            PWD = "123456",
-                            STATE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.Alarm.GMP_ALARM_ITEM", b =>

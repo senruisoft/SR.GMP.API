@@ -55,7 +55,7 @@ namespace SR.GMP.WorkerService.WorkerJob
 
         public void Check(SYS_INST_CENTER center, DateTime LastCheckTime)
         {
-            LastCheckTime = new DateTime(2020, 6, 15);
+            //LastCheckTime = new DateTime(2020, 6, 15);
             using var scope = _serviceScopeFactory.CreateScope();
             using (var dbcontext = scope.ServiceProvider.GetRequiredService<GMPContext>())
             {

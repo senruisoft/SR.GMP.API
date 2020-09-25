@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
@@ -18,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Panda.DynamicWebApi;
 using SR.GMP.API.Filter;
+using SR.GMP.Common.Resolver;
 using SR.GMP.EFCore;
 using SR.GMP.Infrastructure.Repositories;
 using SR.GMP.Infrastructure.UnitOfWork;
@@ -55,6 +57,10 @@ namespace SR.GMP.API
                 mvcOptions.Filters.Add<ModelValidFilterAttribute>();
                 mvcOptions.Filters.Add<GlobalExceptionFilterAttribute>();
                 mvcOptions.Filters.Add<GlobalResultFilterAttribute>();
+            }).AddNewtonsoftJson(options => 
+            {
+                // 配置返回参数小写
+                options.SerializerSettings.ContractResolver = new LowercaseContractResolver();
             });
 
             #region swagger
@@ -142,4 +148,6 @@ namespace SR.GMP.API
             
         }
     }
+
+    
 }

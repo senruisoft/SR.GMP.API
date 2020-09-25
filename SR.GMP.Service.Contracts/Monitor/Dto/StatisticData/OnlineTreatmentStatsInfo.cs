@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
@@ -76,6 +77,12 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
             searchTime = DateTime.Now;
             this.treatment_stats = treatment_stats;
             this.alarm_list = alarm_list;
+            if (treatment_stats != null) 
+            {
+                CompleteCount = treatment_stats.Sum(x => x.CompleteCount);
+                TreatingCount = treatment_stats.Sum(x => x.TreatingCount);
+                TotalCount = treatment_stats.Sum(x => x.TotalCount);
+            }
         }
 
         /// <summary>
@@ -92,5 +99,20 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// 查询时间
         /// </summary>
         public DateTime searchTime { get; set; }
+
+        /// <summary>
+        /// 治疗中人数
+        /// </summary>
+        public int TreatingCount { get; set; }
+
+        /// <summary>
+        /// 治疗完成人数
+        /// </summary>
+        public int CompleteCount { get; set; }
+
+        /// <summary>
+        /// 治疗总人数
+        /// </summary>
+        public int TotalCount { get; set; }
     }
 }

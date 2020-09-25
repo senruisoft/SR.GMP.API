@@ -44,7 +44,7 @@ namespace SR.GMP.EFCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
             #region 测试数据
             modelBuilder.Entity<SYS_INST>().HasData(new SYS_INST
             {
@@ -97,7 +97,7 @@ namespace SR.GMP.EFCore
             {
                 ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
                 ITEM_NAME = "报警项目1",
-                PRIORITY =  DataEntity.DictEnum.PriorityEnum.中,
+                PRIORITY = DataEntity.DictEnum.PriorityEnum.中,
                 CENT_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
             });
 
