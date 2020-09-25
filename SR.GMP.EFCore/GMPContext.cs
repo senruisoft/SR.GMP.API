@@ -6,6 +6,7 @@ using SR.GMP.DataEntity.System;
 using SR.GMP.DataEntity.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -40,29 +41,33 @@ namespace SR.GMP.EFCore
 
         #endregion
 
-        #region 视图
-        public DbSet<TreatmenCountView> TreatmenCountView { get; set; }
-        public DbSet<TreatmentStatsView> TreatmentStatsView { get; set; }
-        #endregion
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             #region 测试数据
             modelBuilder.Entity<SYS_INST>().HasData(new SYS_INST
             {
                 CODE = "0010",
-                NAME = "苏北人民医院",
+                NAME = "仁济医院",
                 ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362")
             });
 
             modelBuilder.Entity<SYS_INST_CENTER>().HasData(new SYS_INST_CENTER
             {
                 CODE = "0010",
-                NAME = "苏北人民医院中心",
+                NAME = "仁济东院",
                 INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
                 ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
+                EXT_ID = "cd20937a-24b2-455c-91c9-0df498c581b2",
+            });
+
+            modelBuilder.Entity<SYS_INST_CENTER>().HasData(new SYS_INST_CENTER
+            {
+                CODE = "0010",
+                NAME = "仁济西院",
+                INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
+                ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8363"),
                 EXT_ID = "0010",
             });
 
@@ -84,8 +89,8 @@ namespace SR.GMP.EFCore
             modelBuilder.Entity<GMP_EVENT_ITEM>().HasData(new GMP_EVENT_ITEM
             {
                 ID = 1,
-                ITEM_NAME = "头晕",
-                ITEM_CODE = "touyun",
+                ITEM_NAME = "高血压",
+                ITEM_CODE = "高血压",
             });
 
             modelBuilder.Entity<GMP_ALARM_ITEM>().HasData(new GMP_ALARM_ITEM
@@ -94,6 +99,14 @@ namespace SR.GMP.EFCore
                 ITEM_NAME = "报警项目1",
                 PRIORITY =  DataEntity.DictEnum.PriorityEnum.中,
                 CENT_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
+            });
+
+            modelBuilder.Entity<GMP_ALARM_ITEM>().HasData(new GMP_ALARM_ITEM
+            {
+                ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
+                ITEM_NAME = "报警项目2",
+                PRIORITY = DataEntity.DictEnum.PriorityEnum.高,
+                CENT_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8363"),
             });
 
             modelBuilder.Entity<GMP_ALARM_ITEM_RULE>().HasData(new GMP_ALARM_ITEM_RULE
@@ -168,38 +181,15 @@ namespace SR.GMP.EFCore
             modelBuilder.Entity<TreatmenCountView>(entity =>
             {
                 entity.HasNoKey();
-
+                entity.ToView("view_YearNewPatientCountInfo");
             });
 
             modelBuilder.Entity<TreatmentStatsView>(entity =>
             {
                 entity.HasNoKey();
+                entity.ToView("view_YearNewPatientMonthlyCountInfo");
             });
 
-
-            //modelBuilder.Entity<TreatmenCountView>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //    entity.ToView("view_YearPatientCountInfo");
-            //});
-
-            //modelBuilder.Entity<TreatmentStatsView>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //    entity.ToView("view_YearPatientMonthlyCountInfo");
-            //});
-
-            //modelBuilder.Entity<TreatmenCountView>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //    entity.ToView("view_YearTreatCountInfo");
-            //});
-
-            //modelBuilder.Entity<TreatmentStatsView>(entity =>
-            //{
-            //    entity.HasNoKey();
-            //    entity.ToView("view_YearTreatMonthlyCountInfo");
-            //});
 
             #endregion
         }

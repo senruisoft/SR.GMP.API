@@ -69,6 +69,14 @@ namespace SR.GMP.EFCore.Migrations
                             ITEM_NAME = "报警项目1",
                             PRIORITY = 1,
                             STATE = 1
+                        },
+                        new
+                        {
+                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
+                            CENT_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8363"),
+                            ITEM_NAME = "报警项目2",
+                            PRIORITY = 2,
+                            STATE = 1
                         });
                 });
 
@@ -172,6 +180,9 @@ namespace SR.GMP.EFCore.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CLASS_ID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CLASS_NAME")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CREATE_AT")
@@ -332,8 +343,8 @@ namespace SR.GMP.EFCore.Migrations
                         new
                         {
                             ID = 1,
-                            ITEM_CODE = "touyun",
-                            ITEM_NAME = "头晕",
+                            ITEM_CODE = "高血压",
+                            ITEM_NAME = "高血压",
                             STATE = 1
                         });
                 });
@@ -528,7 +539,7 @@ namespace SR.GMP.EFCore.Migrations
                         {
                             ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
                             CODE = "0010",
-                            NAME = "苏北人民医院",
+                            NAME = "仁济医院",
                             STATE = 1
                         });
                 });
@@ -601,9 +612,19 @@ namespace SR.GMP.EFCore.Migrations
                         {
                             ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
                             CODE = "0010",
+                            EXT_ID = "cd20937a-24b2-455c-91c9-0df498c581b2",
+                            INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
+                            NAME = "仁济东院",
+                            STATE = 1,
+                            TYPE_CODE = 1
+                        },
+                        new
+                        {
+                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8363"),
+                            CODE = "0010",
                             EXT_ID = "0010",
                             INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
-                            NAME = "苏北人民医院中心",
+                            NAME = "仁济西院",
                             STATE = 1,
                             TYPE_CODE = 1
                         });

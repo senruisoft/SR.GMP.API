@@ -9,6 +9,11 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
     /// </summary>
     public class OnlineTreatmentStatsInfo
     {
+        public OnlineTreatmentStatsInfo() 
+        {
+            AlarmItems = new List<ScheClassAlarmInfo>();
+        }
+
         /// <summary>
         /// 班次名称
         /// </summary>
@@ -33,5 +38,59 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// 治疗完成人数
         /// </summary>
         public int CompleteCount { get; set; }
+
+        /// <summary>
+        /// 班次报警信息
+        /// </summary>
+        public List<ScheClassAlarmInfo> AlarmItems { get; set; }
+
+        /// <summary>
+        /// 报警总数
+        /// </summary>
+        public int AlarmTotalCount { get; set; }
+    }
+
+    /// <summary>
+    /// 班次报警信息
+    /// </summary>
+    public class ScheClassAlarmInfo
+    {
+        /// <summary>
+        /// 报警名称
+        /// </summary>
+        public string AlarmName { get; set; }
+
+        /// <summary>
+        /// 报警数量
+        /// </summary>
+        public int AlarmCount { get; set; }
+    }
+
+    /// <summary>
+    /// 在线统计信息
+    /// </summary>
+    public class OnlineStatsInfo 
+    {
+        public OnlineStatsInfo(List<OnlineTreatmentStatsInfo> treatment_stats, List<AlarmRecordDto> alarm_list)
+        {
+            searchTime = DateTime.Now;
+            this.treatment_stats = treatment_stats;
+            this.alarm_list = alarm_list;
+        }
+
+        /// <summary>
+        /// 在线治疗统计信息
+        /// </summary>
+        public List<OnlineTreatmentStatsInfo> treatment_stats { get; set; }
+
+        /// <summary>
+        /// 报警记录列表
+        /// </summary>
+        public List<AlarmRecordDto> alarm_list { get; set; }
+
+        /// <summary>
+        /// 查询时间
+        /// </summary>
+        public DateTime searchTime { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace SR.GMP.Service.Contracts.AutoMapper
 
             CreateMap<GMP_ALARM_ITEM, AlarmItemDto>().ReverseMap();
             CreateMap<AlarmItemCreatInput, GMP_ALARM_ITEM>();
+            CreateMap<GMP_ALARM_RECORD, AlarmRecordDto>().ReverseMap();
 
             CreateMap<SYS_INST_CENTER, CenterDto>().ReverseMap();
             CreateMap<CenterInput, SYS_INST_CENTER>();

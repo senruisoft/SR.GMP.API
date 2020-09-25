@@ -10,14 +10,14 @@ using SR.GMP.EFCore;
 namespace SR.GMP.EFCore.Migrations
 {
     [DbContext(typeof(GMPContext))]
-    [Migration("20200914055451_ini")]
-    partial class ini
+    [Migration("20200925024141_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -155,7 +155,6 @@ namespace SR.GMP.EFCore.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ALARM_INFO")
-                        .IsRequired()
                         .HasColumnType("nvarchar(128)")
                         .HasMaxLength(128);
 
@@ -167,20 +166,49 @@ namespace SR.GMP.EFCore.Migrations
                         .HasColumnType("nvarchar(128)")
                         .HasMaxLength(128);
 
-                    b.Property<string>("CENT_CODE")
+                    b.Property<string>("BED_LABEL")
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
+
+                    b.Property<Guid>("CENT_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CLASS_ID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CLASS_NAME")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CREATE_AT")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DATA_RECORD_TIME")
+                    b.Property<DateTime>("DATA_RECORD_TIME")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("DOCTOR_NAME")
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
                     b.Property<DateTime?>("HANDLE_TIME")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("NURSE_NAME")
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
+
+                    b.Property<int>("PATIENT_AGE")
+                        .HasColumnType("int");
+
                     b.Property<string>("PATIENT_EXT_ID")
                         .IsRequired()
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("PATIENT_NAME")
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
+
+                    b.Property<string>("PATIENT_SEX")
                         .HasColumnType("nvarchar(64)")
                         .HasMaxLength(64);
 
@@ -189,11 +217,6 @@ namespace SR.GMP.EFCore.Migrations
 
                     b.Property<int>("STATE")
                         .HasColumnType("int");
-
-                    b.Property<string>("TREAMENT_INFO")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
 
                     b.HasKey("ID");
 
@@ -314,8 +337,8 @@ namespace SR.GMP.EFCore.Migrations
                         new
                         {
                             ID = 1,
-                            ITEM_CODE = "touyun",
-                            ITEM_NAME = "头晕",
+                            ITEM_CODE = "高血压",
+                            ITEM_NAME = "高血压",
                             STATE = 1
                         });
                 });
@@ -510,7 +533,7 @@ namespace SR.GMP.EFCore.Migrations
                         {
                             ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
                             CODE = "0010",
-                            NAME = "苏北人民医院",
+                            NAME = "仁济医院",
                             STATE = 1
                         });
                 });
@@ -535,6 +558,10 @@ namespace SR.GMP.EFCore.Migrations
 
                     b.Property<Guid?>("CREATOR_ID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EXT_ID")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<Guid>("INST_ID")
                         .HasColumnType("uniqueidentifier");
@@ -579,8 +606,19 @@ namespace SR.GMP.EFCore.Migrations
                         {
                             ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"),
                             CODE = "0010",
+                            EXT_ID = "cd20937a-24b2-455c-91c9-0df498c581b2",
                             INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
-                            NAME = "苏北人民医院中心",
+                            NAME = "仁济东院",
+                            STATE = 1,
+                            TYPE_CODE = 1
+                        },
+                        new
+                        {
+                            ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8363"),
+                            CODE = "0010",
+                            EXT_ID = "0010",
+                            INST_ID = new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"),
+                            NAME = "仁济西院",
                             STATE = 1,
                             TYPE_CODE = 1
                         });

@@ -55,6 +55,7 @@ namespace SR.GMP.WorkerService.WorkerJob
 
         public void Check(SYS_INST_CENTER center, DateTime LastCheckTime)
         {
+            LastCheckTime = new DateTime(2020, 6, 15);
             using var scope = _serviceScopeFactory.CreateScope();
             using (var dbcontext = scope.ServiceProvider.GetRequiredService<GMPContext>())
             {
@@ -111,6 +112,8 @@ namespace SR.GMP.WorkerService.WorkerJob
                                 DOCTOR_NAME = orgData[i].DOCTOR_NAME,
                                 NURSE_NAME = orgData[i].NURSE_NAME,
                                 RECORD_TIME = orgData[i].RECORD_TIME,
+                                CLASS_ID = orgData[i].CLASS_ID,
+                                CLASS_NAME = orgData[i].CLASS_NAME,
                                 MonitorItems = dict
                             });
                         }
@@ -206,6 +209,7 @@ namespace SR.GMP.WorkerService.WorkerJob
                                                        PRIORITY = item.PRIORITY,
                                                        CENT_ID = center.ID,
                                                        CLASS_ID = data.CLASS_ID,
+                                                       CLASS_NAME = data.CLASS_NAME,
                                                        DATA_RECORD_TIME = monitordata.Select(x => x.RECORD_TIME).Min(),
                                                    }).ToList();
                                     #endregion
@@ -233,6 +237,7 @@ namespace SR.GMP.WorkerService.WorkerJob
                                                        PRIORITY = item.PRIORITY,
                                                        CENT_ID = center.ID,
                                                        CLASS_ID = data.CLASS_ID,
+                                                       CLASS_NAME = data.CLASS_NAME,
                                                        DATA_RECORD_TIME = eventdata.Select(x => x.RECORD_TIME).Min(),
                                                    }).ToList();
                                     #endregion
@@ -260,6 +265,7 @@ namespace SR.GMP.WorkerService.WorkerJob
                             PRIORITY = item.PRIORITY,
                             CENT_ID = center.ID,
                             CLASS_ID = x.First().CLASS_ID,
+                            CLASS_NAME = x.First().CLASS_NAME,
                             DATA_RECORD_TIME = x.Select(x => x.RECORD_TIME).Min(),
                         }));
                     }

@@ -29,13 +29,13 @@ namespace SR.GMP.Service.Contracts.Monitor
         /// </summary>
         /// <param name="cent_id">中心ID</param>
         /// <returns></returns>
-        Task<List<OnlineTreatmentStatsInfo>> GetOnlineTreatmentStatsInfo(Guid cent_id);
+        Task<OnlineStatsInfo> GetOnlineTreatmentStatsInfo(Guid cent_id);
 
         /// <summary>
-        /// 查询今年新增患者人数
+        /// 查询治疗统计数据
         /// </summary>
         /// <param name="cent_id">中心ID</param>
         /// <param name="type">查询类型</param>
-        Task<StatsInfo> GetNewPatientInfo(Guid cent_id, string type);
+        Task<StatsInfo> GetNewPatientInfo(Guid cent_id, int type);
     }
 }

@@ -50,18 +50,18 @@ namespace SR.GMP.API.Controllers.Monitor
         /// <param name="cent_id">中心ID</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<List<OnlineTreatmentStatsInfo>> GetOnlineTreatmentStatsInfo(Guid cent_id)
+        public async Task<OnlineStatsInfo> GetOnlineTreatmentStatsInfo(Guid cent_id)
         {
             return await dataService.GetOnlineTreatmentStatsInfo(cent_id);
         }
 
         /// <summary>
-        /// 查询今年新增患者人数
+        /// 查询治疗统计数据
         /// </summary>
         /// <param name="cent_id">中心ID</param>
-        /// <param name="type">查询类型</param>
+        /// <param name="type">查询类型 0:今年新增患者 1：今年治疗统计 2：治疗例数</param>
         [HttpGet]
-        public async Task<StatsInfo> GetNewPatientInfo(Guid cent_id, string type)
+        public async Task<StatsInfo> GetNewPatientInfo(Guid cent_id, int type)
         {
             return await dataService.GetNewPatientInfo(cent_id, type);
         }

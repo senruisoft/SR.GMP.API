@@ -115,5 +115,10 @@ namespace SR.GMP.DataEntity.Alarm
         /// 班次ID
         /// </summary>
         public string CLASS_ID { get; set; }
+
+        /// <summary>
+        /// 班次名称
+        /// </summary>
+        public string CLASS_NAME { get; set; }
     }
 }

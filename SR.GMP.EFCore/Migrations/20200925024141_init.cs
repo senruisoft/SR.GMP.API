@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SR.GMP.EFCore.Migrations
 {
-    public partial class ini : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,15 +14,22 @@ namespace SR.GMP.EFCore.Migrations
                     ID = table.Column<Guid>(nullable: false),
                     ALARM_ITEM_ID = table.Column<Guid>(nullable: false),
                     PATIENT_EXT_ID = table.Column<string>(maxLength: 64, nullable: false),
+                    PATIENT_NAME = table.Column<string>(maxLength: 64, nullable: true),
+                    PATIENT_SEX = table.Column<string>(maxLength: 64, nullable: true),
+                    PATIENT_AGE = table.Column<int>(nullable: false),
+                    BED_LABEL = table.Column<string>(maxLength: 64, nullable: true),
+                    DOCTOR_NAME = table.Column<string>(maxLength: 64, nullable: true),
+                    NURSE_NAME = table.Column<string>(maxLength: 64, nullable: true),
                     ALARM_ITEM_NAME = table.Column<string>(maxLength: 128, nullable: false),
                     PRIORITY = table.Column<int>(nullable: false),
-                    TREAMENT_INFO = table.Column<string>(maxLength: 128, nullable: false),
-                    ALARM_INFO = table.Column<string>(maxLength: 128, nullable: false),
-                    CENT_CODE = table.Column<string>(nullable: true),
-                    DATA_RECORD_TIME = table.Column<DateTime>(nullable: true),
+                    ALARM_INFO = table.Column<string>(maxLength: 128, nullable: true),
+                    DATA_RECORD_TIME = table.Column<DateTime>(nullable: false),
                     STATE = table.Column<int>(nullable: false),
                     HANDLE_TIME = table.Column<DateTime>(nullable: true),
-                    CREATE_AT = table.Column<DateTime>(nullable: false)
+                    CREATE_AT = table.Column<DateTime>(nullable: false),
+                    CENT_ID = table.Column<Guid>(nullable: false),
+                    CLASS_ID = table.Column<string>(nullable: true),
+                    CLASS_NAME = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -214,7 +221,8 @@ namespace SR.GMP.EFCore.Migrations
                     SORT_CODE = table.Column<string>(maxLength: 128, nullable: true),
                     PY = table.Column<string>(maxLength: 50, nullable: true),
                     CENT_DESC = table.Column<string>(maxLength: 256, nullable: true),
-                    TYPE_CODE = table.Column<int>(nullable: false)
+                    TYPE_CODE = table.Column<int>(nullable: false),
+                    EXT_ID = table.Column<string>(maxLength: 128, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -359,7 +367,7 @@ namespace SR.GMP.EFCore.Migrations
             migrationBuilder.InsertData(
                 table: "GMP_EVENT_ITEM",
                 columns: new[] { "ID", "ITEM_CODE", "ITEM_NAME", "SORT_CODE", "STATE" },
-                values: new object[] { 1, "touyun", "头晕", null, 1 });
+                values: new object[] { 1, "高血压", "高血压", null, 1 });
 
             migrationBuilder.InsertData(
                 table: "GMP_MONITOR_ITEM",
@@ -369,7 +377,7 @@ namespace SR.GMP.EFCore.Migrations
             migrationBuilder.InsertData(
                 table: "SYS_INST",
                 columns: new[] { "ID", "ADDRESS", "CODE", "CREATE_AT", "CREATOR_ID", "MODIFIER_ID", "MODIFY_AT", "NAME", "STATE" },
-                values: new object[] { new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"), null, "0010", null, null, null, null, "苏北人民医院", 1 });
+                values: new object[] { new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"), null, "0010", null, null, null, null, "仁济医院", 1 });
 
             migrationBuilder.InsertData(
                 table: "SYS_USER",
@@ -378,8 +386,13 @@ namespace SR.GMP.EFCore.Migrations
 
             migrationBuilder.InsertData(
                 table: "SYS_INST_CENTER",
-                columns: new[] { "ID", "CENT_DESC", "CODE", "CREATE_AT", "CREATOR_ID", "INST_ID", "MODIFIER_ID", "MODIFY_AT", "NAME", "PY", "SORT_CODE", "STATE", "TYPE_CODE" },
-                values: new object[] { new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"), null, "0010", null, null, new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"), null, null, "苏北人民医院中心", null, null, 1, 1 });
+                columns: new[] { "ID", "CENT_DESC", "CODE", "CREATE_AT", "CREATOR_ID", "EXT_ID", "INST_ID", "MODIFIER_ID", "MODIFY_AT", "NAME", "PY", "SORT_CODE", "STATE", "TYPE_CODE" },
+                values: new object[] { new Guid("b2241873-49ba-4672-92e9-a3825a0e8362"), null, "0010", null, null, "cd20937a-24b2-455c-91c9-0df498c581b2", new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"), null, null, "仁济东院", null, null, 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "SYS_INST_CENTER",
+                columns: new[] { "ID", "CENT_DESC", "CODE", "CREATE_AT", "CREATOR_ID", "EXT_ID", "INST_ID", "MODIFIER_ID", "MODIFY_AT", "NAME", "PY", "SORT_CODE", "STATE", "TYPE_CODE" },
+                values: new object[] { new Guid("b2241873-49ba-4672-92e9-a3825a0e8363"), null, "0010", null, null, "0010", new Guid("a2241873-49ba-4672-92e9-a3825a0e8362"), null, null, "仁济西院", null, null, 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "GMP_ALARM_ITEM",

@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SR.GMP.DataEntity", "SR.GMP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SR.GMP.EFCore", "SR.GMP.EFCore\SR.GMP.EFCore.csproj", "{0CE080AF-E52A-464B-9C16-CFFA8726AFF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SR.GMP.Infrastructure", "SR.GMP.Infrastructure\SR.GMP.Infrastructure.csproj", "{A3CA27F0-0C4D-4006-A33D-1B2C9C3C993C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SR.GMP.Infrastructure", "SR.GMP.Infrastructure\SR.GMP.Infrastructure.csproj", "{A3CA27F0-0C4D-4006-A33D-1B2C9C3C993C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SR.GMP.WorkerService", "SR.GMP.WorkerService\SR.GMP.WorkerService.csproj", "{D5F009F8-733D-4218-B5CB-E2D99598E3F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SR.GMP.WorkerService", "SR.GMP.WorkerService\SR.GMP.WorkerService.csproj", "{D5F009F8-733D-4218-B5CB-E2D99598E3F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

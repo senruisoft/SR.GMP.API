@@ -9,7 +9,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
     <DocumentationFile>bin\Debug\netcoreapp3.1\SR.GMP.API.xml</DocumentationFile>
-    <OutputPath></OutputPath>
+    <OutputPath>bin\Debug\netcoreapp3.1</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp3.1\SR.GMP.API.xml</DocumentationFile>
+    <OutputPath>bin\Release\netcoreapp3.1</OutputPath>
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
