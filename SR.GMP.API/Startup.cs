@@ -83,6 +83,8 @@ namespace SR.GMP.API
 
             // ≈‰÷√AutoMapper
             services.AddAutoMapper(Assembly.Load("SR.GMP.Service.Contracts"));
+
+            services.AddHttpClient();
         }
 
         /// <summary>

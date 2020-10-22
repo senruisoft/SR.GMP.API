@@ -12,6 +12,11 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
     public class AlarmRecordDto : EntityDto<Guid>
     {
         /// <summary>
+        /// 患者ID
+        /// </summary>
+        public string PATIENT_EXT_ID { get; set; }
+
+        /// <summary>
         /// 患者姓名
         /// </summary>
         public string PATIENT_NAME { get; set; }

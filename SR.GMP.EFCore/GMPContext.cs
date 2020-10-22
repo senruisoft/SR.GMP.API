@@ -112,7 +112,7 @@ namespace SR.GMP.EFCore
             modelBuilder.Entity<GMP_ALARM_ITEM_RULE>().HasData(new GMP_ALARM_ITEM_RULE
             {
                 ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
-                ITEM_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
+                ITEM_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
                 RULE_TYPE = DataEntity.DictEnum.AlarmRuleEnum.监测数据,
                 MONITOR_ITEM_CODE = "VENOUS_PRESSURE",
                 LOGIC_TYPE = DataEntity.DictEnum.AlarmLogicEnum.and,
@@ -121,7 +121,7 @@ namespace SR.GMP.EFCore
             new GMP_ALARM_ITEM_RULE
             {
                 ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
-                ITEM_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8312"),
+                ITEM_ID = new Guid("b2241873-49ba-4672-92e9-a3825a0e8313"),
                 RULE_TYPE = DataEntity.DictEnum.AlarmRuleEnum.监测数据,
                 MONITOR_ITEM_CODE = "ARTERIAL_PRESSURE",
                 LOGIC_TYPE = DataEntity.DictEnum.AlarmLogicEnum.and,
@@ -190,7 +190,11 @@ namespace SR.GMP.EFCore
                 entity.ToView("view_YearNewPatientMonthlyCountInfo");
             });
 
-
+            modelBuilder.Entity<PatientGeneralView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_PatientGeneralInfo");
+            });
             #endregion
         }
 

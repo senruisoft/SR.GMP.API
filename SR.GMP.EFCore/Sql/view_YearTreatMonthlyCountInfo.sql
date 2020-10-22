@@ -1,4 +1,4 @@
-create view [dbo].[view_YearMonthTreatCountInfo]
+create view [dbo].[view_YearTreatMonthlyCountInfo]
  as 
 
 

@@ -10,10 +10,9 @@ using System.Text;
 namespace SR.GMP.Service.Base
 {
     /// <summary>
-    /// 动态生成Controller API的抽象服务
+    /// 应用抽象服务
     /// </summary>
-    [DynamicWebApi]
-    public abstract class ApplicationService : IApplicationService, IDynamicWebApi
+    public abstract class ApplicationService : DynamicService, IApplicationService
     {
         public IMapper _mapper { get; }
         public IUnitOfWork unitOfWork { get; }
