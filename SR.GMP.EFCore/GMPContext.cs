@@ -147,7 +147,7 @@ namespace SR.GMP.EFCore
             });
             #endregion
 
-            #region 视图模型映射
+            #region 监控首页视图
             modelBuilder.Entity<MonitorViewData>(entity =>
             {
                 entity.HasNoKey();
@@ -189,11 +189,37 @@ namespace SR.GMP.EFCore
                 entity.HasNoKey();
                 entity.ToView("view_YearNewPatientMonthlyCountInfo");
             });
+            #endregion
 
+            #region 概括页面视图
             modelBuilder.Entity<PatientGeneralView>(entity =>
             {
                 entity.HasNoKey();
                 entity.ToView("view_PatientGeneralInfo");
+            });
+
+            modelBuilder.Entity<PatientBasicTreatView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_PatientBasicTreatInfo");
+            });
+
+            modelBuilder.Entity<DeviceTreatDataView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_DeviceTreatDataInfo");
+            });
+
+            modelBuilder.Entity<MonitorDataView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_MonitorDataInfo");
+            });
+
+            modelBuilder.Entity<TreatOrderView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_TreatOrderInfo");
             });
             #endregion
         }

@@ -1,0 +1,27 @@
+create view [dbo].[view_MonitorDataInfo]
+ as
+select TREATMENT.PATIENT_ID, TREATMENT.ID as TREATMENT_ID, TREATMENT.CENT_ID, TREATMENT.TRAETMENT_DATE, monitor.RECORD_TIME
+ ,[VENOUS_PRESSURE]
+      ,[ARTERIAL_PRESSURE]
+      ,[TRANS_PRESSURE]
+      ,monitor.[BLOOD_FLOW]
+      ,[RP_FLUID_FLOW]
+      ,[UF_RATE]
+      ,[UF]
+      ,[BREATHE]
+      ,monitor.[DIALYSATE_TEMPERATURE]
+      ,[BODY_TEMPERATURE]
+      ,[SYSTOLIC_BLOOD_PRESSURE]
+      ,[STRETCH_PRESSURE]
+      ,[HEART_RATE]
+      ,[ELECTRICAL_CONDUCTIVITY]
+	   ,monitor.[DIALYSATE_FLOW]
+      ,[ATICOAGULANT_ADD]
+      ,[SIGNS_STATUS]
+      ,[EVENT_BIREF]
+      ,monitor.[KTV]
+from [HDIS_DEV].[dbo].[HD_PATIENT] patient
+join [HDIS_DEV].[dbo].HD_TREATMENT TREATMENT
+on patient.ID = TREATMENT.PATIENT_ID
+join [HDIS_DEV].[dbo].[HD_MONITORING_RECORD] monitor
+on monitor.TREATMENT_ID = TREATMENT.ID

@@ -80,7 +80,7 @@ namespace SR.GMP.Service.Monitor
             var treatment_stats = _mapper.Map<List<OnlineTreatmentStatsView>, List<OnlineTreatmentStatsInfo>>(viewData);
 
             // 当天报警记录
-            var alarm_record = await dbcontext.GMP_ALARM_RECORD.Where(x => x.CENT_ID == cent_id && x.CREATE_AT >= DateTime.Now.Date).OrderByDescending(x => x.PRIORITY).ToListAsync();
+            var alarm_record = await dbcontext.GMP_ALARM_RECORD.Where(x => x.CENT_ID == cent_id && x.DATA_RECORD_TIME >= DateTime.Now.Date).OrderByDescending(x => x.PRIORITY).ToListAsync();
             var alarm_list = _mapper.Map<List<GMP_ALARM_RECORD>, List<AlarmRecordDto>>(alarm_record);
 
             // 报警配置项目

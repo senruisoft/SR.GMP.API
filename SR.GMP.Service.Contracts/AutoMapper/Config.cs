@@ -25,7 +25,8 @@ namespace SR.GMP.Service.Contracts.AutoMapper
 
             CreateMap<PatientGeneralView, PatientGeneralInfo>()
                 .ForMember(d => d.DIALYSIS_AGE, opt => { opt.MapFrom(s => s.TREATMENT_START_DATE.HasValue ? CommonHelper.GetAge(s.TREATMENT_START_DATE.Value, DateTime.Now) : null); });
-
+            CreateMap<MonitorDataView, MonitorDataDto>();
+            CreateMap<TreatOrderView, TreatOrderDto>();
 
             CreateMap<GMP_ALARM_ITEM, AlarmItemDto>().ReverseMap();
             CreateMap<AlarmItemCreatInput, GMP_ALARM_ITEM>();
