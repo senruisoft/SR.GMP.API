@@ -137,7 +137,7 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.View
                     BEFORE_SP = x.BEFORE_SP,
                     AFTER_SBP = x.AFTER_SBP,
                     AFTER_SP = x.AFTER_SP,
-                }).ToList();
+                }).OrderBy(x => x.TRAETMENT_DATE).ToList();
             }
             if (data.Count > 1) 
             {

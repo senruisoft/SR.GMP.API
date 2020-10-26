@@ -10,7 +10,7 @@ using SR.GMP.EFCore;
 namespace SR.GMP.EFCore.Migrations
 {
     [DbContext(typeof(GMPContext))]
-    [Migration("20200925091151_init")]
+    [Migration("20201026020035_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

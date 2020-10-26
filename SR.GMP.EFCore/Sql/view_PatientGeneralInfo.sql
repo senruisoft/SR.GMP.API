@@ -1,4 +1,3 @@
-/****** SSMS 的 SelectTopNRows 命令的脚本  ******/
 create view [dbo].[view_PatientGeneralInfo]
  as
 SELECT patient.ID as PATIENT_ID, patient.CENT_ID, patient.PATIENT_NAME, patient.DIALYSIS_ID, treatment.BED_LABEL , sche_class.NAME as CLASS_NAME,
