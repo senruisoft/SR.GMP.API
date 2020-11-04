@@ -8,6 +8,7 @@ using SR.GMP.DataEntity.System;
 using SR.GMP.DataEntity.ViewModel;
 using SR.GMP.EFCore;
 using SR.GMP.Infrastructure.Repositories;
+using SR.GMP.Infrastructure.Repositories.Alarm;
 using SR.GMP.Service.Contracts.Monitor;
 using SR.GMP.Service.Contracts.Monitor.Dto.StatisticData;
 using System;
@@ -23,12 +24,15 @@ namespace SR.GMP.Service.Monitor
         IMapper _mapper;
         GMPContext dbcontext;
         IRepository<SYS_INST_CENTER, Guid> centRepository;
+        IAlarmRepository alarmRepository;
 
-        public StatisticsDataService(IMapper _mapper, GMPContext dbcontext, IRepository<SYS_INST_CENTER, Guid> centRepository)
+        public StatisticsDataService(IMapper _mapper, GMPContext dbcontext, IRepository<SYS_INST_CENTER, Guid> centRepository,
+            IAlarmRepository alarmRepository)
         {
             this.dbcontext = dbcontext;
             this.centRepository = centRepository;
             this._mapper = _mapper;
+            this.alarmRepository = alarmRepository;
         }
 
         /// <summary>
@@ -80,8 +84,11 @@ namespace SR.GMP.Service.Monitor
             var treatment_stats = _mapper.Map<List<OnlineTreatmentStatsView>, List<OnlineTreatmentStatsInfo>>(viewData);
 
             // 当天报警记录
-            var alarm_record = await dbcontext.GMP_ALARM_RECORD.Where(x => x.CENT_ID == cent_id && x.DATA_RECORD_TIME >= DateTime.Now.Date).OrderByDescending(x => x.PRIORITY).ToListAsync();
+            var alarm_record = await dbcontext.GMP_ALARM_RECORD.Where(x => x.CENT_ID == cent_id 
+                && x.DATA_RECORD_TIME >= DateTime.Now.Date).Include(x => x.ALARM_RECORD_DATA_LIST).OrderByDescending(x => x.PRIORITY).ToListAsync();
             var alarm_list = _mapper.Map<List<GMP_ALARM_RECORD>, List<AlarmRecordDto>>(alarm_record);
+            // 查询报警规则信息
+            var alarm_items = alarmRepository.GetAlarmItemsInfo(alarm_record.Select(x => x.ALARM_ITEM_ID).Distinct().ToList());
 
             // 报警配置项目
             var alarmItems = dbcontext.GMP_ALARM_ITEM.Where(x => x.CENT_ID == cent_id && x.STATE == StateEnum.启用).OrderByDescending(x => x.PRIORITY).Select(x => new
@@ -103,7 +110,7 @@ namespace SR.GMP.Service.Monitor
                                    }).ToList();
                 item.AlarmTotalCount = item.AlarmItems.Sum(x => x.AlarmCount);
             }
-            var result = new OnlineStatsInfo(treatment_stats, alarm_list);
+            var result = new OnlineStatsInfo(treatment_stats, alarm_list, alarm_items);
             return result;
         }
 

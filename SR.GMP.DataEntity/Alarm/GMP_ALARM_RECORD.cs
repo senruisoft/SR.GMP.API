@@ -120,5 +120,10 @@ namespace SR.GMP.DataEntity.Alarm
         /// 班次名称
         /// </summary>
         public string CLASS_NAME { get; set; }
+
+        /// <summary>
+        /// 报警监测数据列表
+        /// </summary>
+        public ICollection<GMP_ALARM_RECORD_DATA> ALARM_RECORD_DATA_LIST { get; set; }
     }
 }

@@ -47,7 +47,12 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         public string NURSE_NAME { get; set; }
 
         /// <summary>
-        /// 项目名称
+        /// 报警项目ID
+        /// </summary>
+        public Guid ALARM_ITEM_ID { get; set; }
+
+        /// <summary>
+        /// 报警项目名称
         /// </summary>
         public string ALARM_ITEM_NAME { get; set; }
 
@@ -70,5 +75,38 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// 班次
         /// </summary>
         public string CLASS_NAME { get; set; }
+
+        /// <summary>
+        /// 报警监测数据
+        /// </summary>
+        public List<AlarmRecordDataDto> RECORD_DATA_LIST { get; set; }
+    }
+
+    public class AlarmRecordDataDto
+    {
+        /// <summary>
+        /// 监控项名称
+        /// </summary>
+        public string MONITOR_ITEM_NAME { get; set; }
+
+        /// <summary>
+        /// 监控项CODE
+        /// </summary>
+        public string MONITOR_ITEM_CODE { get; set; }
+
+        /// <summary>
+        /// 监控项数值
+        /// </summary>
+        public string MONITOR_ITEM_VALUE { get; set; }
+
+        /// <summary>
+        /// 是否为报警项
+        /// </summary>
+        public bool IS_ALARM { get; set; }
+
+        /// <summary>
+        /// 数据项类型
+        /// </summary>
+        public AlarmRuleEnum RULE_TYPE { get; set; }
     }
 }

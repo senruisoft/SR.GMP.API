@@ -25,6 +25,7 @@ namespace SR.GMP.EFCore
         public DbSet<GMP_ALARM_ITEM_RULE> GMP_ALARM_ITEM_RULE { get; set; }
         public DbSet<GMP_ALARM_RULE_CONFIG> GMP_ALARM_RULE_CONFIG { get; set; }
         public DbSet<GMP_ALARM_RECORD> GMP_ALARM_RECORD { get; set; }
+        public DbSet<GMP_ALARM_RECORD_DATA> GMP_ALARM_RECORD_DATA { get; set; }
         #endregion
 
         #region 系统字典表
@@ -44,6 +45,8 @@ namespace SR.GMP.EFCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<GMP_ALARM_RECORD_DATA>().HasKey(t => new { t.ALARM_RECORD_ID, t.MONITOR_ITEM_CODE });
 
             #region 监控首页视图
             modelBuilder.Entity<MonitorViewData>(entity =>

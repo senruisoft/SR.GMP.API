@@ -55,10 +55,22 @@ namespace SR.GMP.WorkerService.WorkerJob
 
         public void Check(SYS_INST_CENTER center, DateTime LastCheckTime)
         {
-            //LastCheckTime = new DateTime(2020, 6, 15);
+            LastCheckTime = new DateTime(2020,11, 3);
             using var scope = _serviceScopeFactory.CreateScope();
             using (var dbcontext = scope.ServiceProvider.GetRequiredService<GMPContext>())
             {
+                // 监测数据项字典
+                var monitor_items = new Dictionary<string, string>();
+                dbcontext.GMP_MONITOR_ITEM.ToList().ForEach(item =>
+                {
+                    monitor_items.Add(item.ITEM_CODE, item.ITEM_NAME);
+                    monitor_items.Add(item.ITEM_CODE + "_diff", item.ITEM_NAME + "前后差值");
+                });
+                var event_items = new Dictionary<string, string>();
+                dbcontext.GMP_EVENT_ITEM.ToList().ForEach(item =>
+                {
+                    event_items.Add(item.ITEM_CODE, item.ITEM_NAME);
+                });
                 List<GMP_ALARM_RECORD> alarmRecordList = new List<GMP_ALARM_RECORD>();
                 // 报警配置读取
                 var AlarmItems = dbcontext.GMP_ALARM_ITEM.Where(x => x.CENT_ID == center.ID && x.STATE == StateEnum.启用)
@@ -95,7 +107,7 @@ namespace SR.GMP.WorkerService.WorkerJob
                                 if (lastData.Count - 1 >= i)
                                 {
                                     var lastValue = lastData[i].GetType().GetProperty(monitorItem).GetValue(lastData[i]);
-                                    dict[monitorItem + "_diff"] = lastValue == null ? default(decimal?) : (decimal)lastValue - dict[monitorItem];
+                                    dict[monitorItem + "_diff"] = lastValue == null ? default(decimal?) : dict[monitorItem] - (decimal)lastValue;
                                 }
                                 else
                                 {
@@ -122,7 +134,7 @@ namespace SR.GMP.WorkerService.WorkerJob
                 }
 
                 // 是否存在临床事件项目报警配置
-                bool hasEventAlarm = AlarmItems.Any(x => x.ALARM_ITEM_RULE_LIST.Where(x => !string.IsNullOrEmpty(x.EVENT_ITEM_CODE)).Count() > 0);
+                bool hasEventAlarm = AlarmItems.Any(x => x.ALARM_ITEM_RULE_LIST.Where(c => !string.IsNullOrEmpty(c.EVENT_ITEM_CODE)).Count() > 0);
                 // 查询临床事件记录
                 DateTime nowDate = LastCheckTime.Date;
                 DateTime endDate = LastCheckTime.Date.AddDays(1);
@@ -132,6 +144,7 @@ namespace SR.GMP.WorkerService.WorkerJob
                 // 遍历报警配置项目
                 foreach (var item in AlarmItems)
                 {
+                    
                     List<MonitorRecordData> recordDataList = new List<MonitorRecordData>();
                     #region 监测数据报警检查
                     if (RecordDataList.Count > 0)
@@ -143,33 +156,64 @@ namespace SR.GMP.WorkerService.WorkerJob
                         {
                             var tempFun = condition;
                             Func<MonitorRecordData, bool> role_condition = x => false;
-                        // 遍历项目报警条件
-                        rule.ALARM_RULE_CONFIG_LIST.ToList().ForEach(config =>
+                            // 遍历项目报警条件
+                            rule.ALARM_RULE_CONFIG_LIST.ToList().ForEach(config =>
                             {
                                 var tempCondition = role_condition;
-                            // 是否比对前后数据差值
-                            if (!config.IS_DIFFVALUE)
+                                // 是否比对前后数据差值
+                                if (!config.IS_DIFFVALUE)
                                 {
-                                    role_condition = x => tempCondition(x) || x.MonitorItems[rule.MONITOR_ITEM_CODE] != null &&
-                                    (!config.MIN_VALUE.HasValue || x.MonitorItems[rule.MONITOR_ITEM_CODE] > config.MIN_VALUE || config.IS_CONTAINMIN && x.MonitorItems[rule.MONITOR_ITEM_CODE] == config.MIN_VALUE) &&
-                                    (!config.MAX_VALUE.HasValue || x.MonitorItems[rule.MONITOR_ITEM_CODE] < config.MAX_VALUE || config.IS_CONTAINMAX && x.MonitorItems[rule.MONITOR_ITEM_CODE] == config.MAX_VALUE);
+                                    role_condition = x =>
+                                    {
+                                        var logic_result = x.MonitorItems[rule.MONITOR_ITEM_CODE] != null &&
+                                         (!config.MIN_VALUE.HasValue || x.MonitorItems[rule.MONITOR_ITEM_CODE] > config.MIN_VALUE
+                                         || config.IS_CONTAINMIN && x.MonitorItems[rule.MONITOR_ITEM_CODE] == config.MIN_VALUE) &&
+                                         (!config.MAX_VALUE.HasValue || x.MonitorItems[rule.MONITOR_ITEM_CODE] < config.MAX_VALUE
+                                         || config.IS_CONTAINMAX && x.MonitorItems[rule.MONITOR_ITEM_CODE] == config.MAX_VALUE);
+                                        // 记录报警项
+                                        if (logic_result && !x.AlarmItems.Contains(rule.MONITOR_ITEM_CODE))
+                                        {
+                                            x.AlarmItems.Add(rule.MONITOR_ITEM_CODE);
+                                        }
+                                        // 记录监控数据项
+                                        x.AlarmConfigItems[rule.MONITOR_ITEM_CODE] = x.MonitorItems[rule.MONITOR_ITEM_CODE];
+                                        return tempCondition(x) || logic_result;
+                                    };
                                 }
                                 else
                                 {
                                     var item_code = rule.MONITOR_ITEM_CODE + "_diff";
-                                    role_condition = x => tempCondition(x) || x.MonitorItems[item_code] != null &&
-                                    (!config.MIN_VALUE.HasValue || Math.Abs(x.MonitorItems[item_code].Value) > config.MIN_VALUE || config.IS_CONTAINMIN && Math.Abs(x.MonitorItems[item_code].Value) == config.MIN_VALUE) &&
-                                    (!config.MAX_VALUE.HasValue || Math.Abs(x.MonitorItems[item_code].Value) < config.MAX_VALUE || config.IS_CONTAINMAX && Math.Abs(x.MonitorItems[item_code].Value) == config.MAX_VALUE);
+                                    role_condition = x =>
+                                    {
+                                        var logic_result = x.MonitorItems[item_code] != null &&
+                                         (!config.MIN_VALUE.HasValue || Math.Abs(x.MonitorItems[item_code].Value) > config.MIN_VALUE
+                                         || config.IS_CONTAINMIN && Math.Abs(x.MonitorItems[item_code].Value) == config.MIN_VALUE) &&
+                                         (!config.MAX_VALUE.HasValue || Math.Abs(x.MonitorItems[item_code].Value) < config.MAX_VALUE
+                                         || config.IS_CONTAINMAX && Math.Abs(x.MonitorItems[item_code].Value) == config.MAX_VALUE);
+                                        // 记录报警项
+                                        if (logic_result && !x.AlarmItems.Contains(item_code))
+                                        {
+                                            x.AlarmItems.Add(item_code);
+                                        }
+                                        // 记录监控数据项
+                                        x.AlarmConfigItems[item_code] = x.MonitorItems[item_code];
+                                        x.AlarmConfigItems[rule.MONITOR_ITEM_CODE] = x.MonitorItems[rule.MONITOR_ITEM_CODE];
+                                        return tempCondition(x) || logic_result;
+                                    };
                                 }
                             });
-                        // 组合逻辑
-                        switch (rule.LOGIC_TYPE)
+                            // 组合逻辑
+                            switch (rule.LOGIC_TYPE)
                             {
                                 case DataEntity.DictEnum.AlarmLogicEnum.and:
                                     condition = x => tempFun(x) && role_condition(x);
                                     break;
                                 case DataEntity.DictEnum.AlarmLogicEnum.or:
-                                    condition = x => tempFun(x) || role_condition(x);
+                                    condition = x => 
+                                    {
+                                        var logic_result = role_condition(x);
+                                        return tempFun(x) || logic_result;
+                                    };
                                     break;
                             }
                         });
@@ -211,6 +255,20 @@ namespace SR.GMP.WorkerService.WorkerJob
                                                        CLASS_ID = data.CLASS_ID,
                                                        CLASS_NAME = data.CLASS_NAME,
                                                        DATA_RECORD_TIME = monitordata.Select(x => x.RECORD_TIME).Min(),
+                                                       ALARM_RECORD_DATA_LIST = data.AlarmConfigItems.Select(x => new GMP_ALARM_RECORD_DATA 
+                                                       {
+                                                           MONITOR_ITEM_CODE = x.Key,
+                                                           MONITOR_ITEM_VALUE = x.Value.ToString(),
+                                                           IS_ALARM = data.AlarmItems.Contains(x.Key),
+                                                           RULE_TYPE = AlarmRuleEnum.监测数据,
+                                                           MONITOR_ITEM_NAME = monitor_items.ContainsKey(x.Key) ? monitor_items[x.Key] : null,
+                                                       }).Concat(eventData.Select(x => new GMP_ALARM_RECORD_DATA 
+                                                       {
+                                                           MONITOR_ITEM_CODE = x.EVENT_CODE,
+                                                           IS_ALARM = true,
+                                                           RULE_TYPE = AlarmRuleEnum.临床事件,
+                                                           MONITOR_ITEM_NAME = event_items.ContainsKey(x.EVENT_CODE) ? event_items[x.EVENT_CODE] : null,
+                                                       })).ToArray()
                                                    }).ToList();
                                     #endregion
                                     break;
@@ -221,8 +279,9 @@ namespace SR.GMP.WorkerService.WorkerJob
                                                    join monitordata in recordDataList.GroupBy(x => x.PATIENT_ID)
                                                    on eventdata.Key equals monitordata.Key into gv
                                                    from gvdata in gv.DefaultIfEmpty()
-                                                   where gvdata.Count() == 0
+                                                   where gvdata == null || gvdata.Count() == 0
                                                    let data = eventdata.First()
+                                                   let monitor_data = RecordDataList.Where(x => x.PATIENT_ID == eventdata.Key).OrderByDescending(x => x.RECORD_TIME).FirstOrDefault()
                                                    select new GMP_ALARM_RECORD
                                                    {
                                                        ALARM_ITEM_ID = item.ID,
@@ -239,6 +298,19 @@ namespace SR.GMP.WorkerService.WorkerJob
                                                        CLASS_ID = data.CLASS_ID,
                                                        CLASS_NAME = data.CLASS_NAME,
                                                        DATA_RECORD_TIME = eventdata.Select(x => x.RECORD_TIME).Min(),
+                                                       ALARM_RECORD_DATA_LIST = eventData.Select(x => new GMP_ALARM_RECORD_DATA
+                                                       {
+                                                           MONITOR_ITEM_CODE = x.EVENT_CODE,
+                                                           IS_ALARM = true,
+                                                           RULE_TYPE = AlarmRuleEnum.临床事件,
+                                                           MONITOR_ITEM_NAME = event_items.ContainsKey(x.EVENT_CODE) ? event_items[x.EVENT_CODE] : null,
+                                                       }).Concat(monitor_data == null ? new GMP_ALARM_RECORD_DATA[0] : monitor_data.AlarmConfigItems.Select(x => new GMP_ALARM_RECORD_DATA 
+                                                       {
+                                                           MONITOR_ITEM_CODE = x.Key,
+                                                           MONITOR_ITEM_VALUE = x.Value.ToString(),
+                                                           RULE_TYPE = AlarmRuleEnum.监测数据,
+                                                           MONITOR_ITEM_NAME = monitor_items.ContainsKey(x.Key) ? monitor_items[x.Key] : null,
+                                                       })).ToArray()
                                                    }).ToList();
                                     #endregion
                                     break;
@@ -267,6 +339,14 @@ namespace SR.GMP.WorkerService.WorkerJob
                             CLASS_ID = x.First().CLASS_ID,
                             CLASS_NAME = x.First().CLASS_NAME,
                             DATA_RECORD_TIME = x.Select(x => x.RECORD_TIME).Min(),
+                            ALARM_RECORD_DATA_LIST = x.First().AlarmConfigItems.Select(c => new GMP_ALARM_RECORD_DATA
+                            {
+                                MONITOR_ITEM_CODE = c.Key,
+                                MONITOR_ITEM_VALUE = c.Value.ToString(),
+                                IS_ALARM = x.First().AlarmItems.Contains(c.Key),
+                                RULE_TYPE = AlarmRuleEnum.监测数据,
+                                MONITOR_ITEM_NAME = monitor_items.ContainsKey(c.Key) ? monitor_items[c.Key] : null,
+                            }).ToArray()
                         }));
                     }
                 }

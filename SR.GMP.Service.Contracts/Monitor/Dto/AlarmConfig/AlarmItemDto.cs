@@ -20,6 +20,16 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig
         public PriorityEnum PRIORITY { get; set; }
 
         /// <summary>
+        /// 处理措施
+        /// </summary>
+        public string TREAT_MEASURE { get; set; }
+
+        /// <summary>
+        /// 处理流程
+        /// </summary>
+        public string TREAT_PROCESS { get; set; }
+
+        /// <summary>
         /// 中心ID
         /// </summary>
         public Guid CENT_ID { get; set; }
@@ -28,5 +38,10 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig
         /// 状态
         /// </summary>
         public StateEnum STATE { get; set; }
+
+        /// <summary>
+        /// 报警规则描述
+        /// </summary>
+        public string RULE { get; set; }
     }
 }

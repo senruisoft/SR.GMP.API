@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SR.GMP.EFCore;
 
 namespace SR.GMP.EFCore.Migrations
 {
     [DbContext(typeof(GMPContext))]
-    partial class GMPContextModelSnapshot : ModelSnapshot
+    [Migration("20201103021105_addrecorddata")]
+    partial class addrecorddata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,12 +52,6 @@ namespace SR.GMP.EFCore.Migrations
 
                     b.Property<int>("STATE")
                         .HasColumnType("int");
-
-                    b.Property<string>("TREAT_MEASURE")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TREAT_PROCESS")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -206,10 +202,6 @@ namespace SR.GMP.EFCore.Migrations
 
                     b.Property<bool>("IS_ALARM")
                         .HasColumnType("bit");
-
-                    b.Property<string>("MONITOR_ITEM_NAME")
-                        .HasColumnType("nvarchar(64)")
-                        .HasMaxLength(64);
 
                     b.Property<string>("MONITOR_ITEM_VALUE")
                         .HasColumnType("nvarchar(64)")

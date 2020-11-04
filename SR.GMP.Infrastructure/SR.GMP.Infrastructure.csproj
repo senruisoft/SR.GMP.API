@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SR.GMP.DataEntity\SR.GMP.DataEntity.csproj" />
     <ProjectReference Include="..\SR.GMP.EFCore\SR.GMP.EFCore.csproj" />
+    <ProjectReference Include="..\SR.GMP.Service.Contracts\SR.GMP.Service.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

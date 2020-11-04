@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,11 +73,12 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
     /// </summary>
     public class OnlineStatsInfo 
     {
-        public OnlineStatsInfo(List<OnlineTreatmentStatsInfo> treatment_stats, List<AlarmRecordDto> alarm_list)
+        public OnlineStatsInfo(List<OnlineTreatmentStatsInfo> treatment_stats, List<AlarmRecordDto> alarm_list, List<AlarmItemDto> alarm_items)
         {
             searchTime = DateTime.Now;
             this.treatment_stats = treatment_stats;
             this.alarm_list = alarm_list;
+            this.alarm_items = alarm_items;
             if (treatment_stats != null) 
             {
                 CompleteCount = treatment_stats.Sum(x => x.CompleteCount);
@@ -94,6 +96,11 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// 报警记录列表
         /// </summary>
         public List<AlarmRecordDto> alarm_list { get; set; }
+
+        /// <summary>
+        /// 报警配置列表
+        /// </summary>
+        public List<AlarmItemDto> alarm_items { get; set; }
 
         /// <summary>
         /// 查询时间

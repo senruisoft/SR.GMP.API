@@ -184,6 +184,23 @@ namespace SR.GMP.DataEntity.ViewModel
         /// 监测数据项
         /// </summary>
         public Dictionary<string, decimal?> MonitorItems { get; set; }
+
+        /// <summary>
+        /// 报警配置数据项
+        /// </summary>
+        public Dictionary<string, decimal?> AlarmConfigItems { get; set; }
+
+        /// <summary>
+        /// 报警项目
+        /// </summary>
+        public List<string> AlarmItems { get; set; }
+
+        public MonitorRecordData() 
+        {
+            MonitorItems = new Dictionary<string, decimal?>();
+            AlarmConfigItems = new Dictionary<string, decimal?>();
+            AlarmItems = new List<string>();
+        }
     }
 
     /// <summary>
