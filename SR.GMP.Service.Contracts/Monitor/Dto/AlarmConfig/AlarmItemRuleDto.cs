@@ -1,11 +1,12 @@
 ﻿using SR.GMP.DataEntity.DictEnum;
+using SR.GMP.Service.Contracts.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig
 {
-    public class AlarmItemRuleDto
+    public class AlarmItemRuleDto : EntityDto<Guid>
     {
         /// <summary>
         /// 规则类型
@@ -31,6 +32,16 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig
         /// 顺序值
         /// </summary>
         public int SORT_NUM { get; set; }
+
+        /// <summary>
+        /// 规则配置列表
+        /// </summary>
+        public List<AlarmRuleConfigDto> ConfigList { get; set; }
+
+        public AlarmItemRuleDto()
+        {
+            ConfigList = new List<AlarmRuleConfigDto>();
+        }
     }
 
 

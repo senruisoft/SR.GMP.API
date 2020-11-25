@@ -9,6 +9,7 @@ using SR.GMP.DataEntity.ViewModel;
 using SR.GMP.EFCore;
 using SR.GMP.Infrastructure.Repositories;
 using SR.GMP.Infrastructure.Repositories.Alarm;
+using SR.GMP.Infrastructure.UnitOfWork;
 using SR.GMP.Service.Contracts.Monitor;
 using SR.GMP.Service.Contracts.Monitor.Dto.StatisticData;
 using System;
@@ -25,14 +26,18 @@ namespace SR.GMP.Service.Monitor
         GMPContext dbcontext;
         IRepository<SYS_INST_CENTER, Guid> centRepository;
         IAlarmRepository alarmRepository;
+        IAlarmRecordRepository alarmRecordRepository;
+        IUnitOfWork unitOfWork;
 
         public StatisticsDataService(IMapper _mapper, GMPContext dbcontext, IRepository<SYS_INST_CENTER, Guid> centRepository,
-            IAlarmRepository alarmRepository)
+            IAlarmRepository alarmRepository, IAlarmRecordRepository alarmRecordRepository, IUnitOfWork unitOfWork)
         {
             this.dbcontext = dbcontext;
             this.centRepository = centRepository;
             this._mapper = _mapper;
             this.alarmRepository = alarmRepository;
+            this.alarmRecordRepository = alarmRecordRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -88,7 +93,7 @@ namespace SR.GMP.Service.Monitor
                 && x.DATA_RECORD_TIME >= DateTime.Now.Date).Include(x => x.ALARM_RECORD_DATA_LIST).OrderByDescending(x => x.PRIORITY).ToListAsync();
             var alarm_list = _mapper.Map<List<GMP_ALARM_RECORD>, List<AlarmRecordDto>>(alarm_record);
             // 查询报警规则信息
-            var alarm_items = alarmRepository.GetAlarmItemsInfo(alarm_record.Select(x => x.ALARM_ITEM_ID).Distinct().ToList());
+            var alarm_items = alarmRepository.GetAlarmItemsInfo(cent_id, alarm_record.Select(x => x.ALARM_ITEM_ID).Distinct().ToList());
 
             // 报警配置项目
             var alarmItems = dbcontext.GMP_ALARM_ITEM.Where(x => x.CENT_ID == cent_id && x.STATE == StateEnum.启用).OrderByDescending(x => x.PRIORITY).Select(x => new
@@ -113,7 +118,6 @@ namespace SR.GMP.Service.Monitor
             var result = new OnlineStatsInfo(treatment_stats, alarm_list, alarm_items);
             return result;
         }
-
 
         /// <summary>
         /// 查询查询治疗统计数据
@@ -155,6 +159,22 @@ namespace SR.GMP.Service.Monitor
                 treatmenCountInfo = _mapper.Map<TreatmenCountView, TreatmenCountInfo>(TreatmenCount.FirstOrDefault()),
                 treatmentStatsInfo = _mapper.Map< List<TreatmentStatsView>, List<TreatmentStatsInfo>>(TreatmentStats)
             };
+            return result;
+        }
+
+        /// <summary>
+        /// 处理报警记录
+        /// </summary>
+        /// <param name="record_id"></param>
+        /// <returns></returns>
+        public async Task<bool> HandleAlarmRecord(Guid record_id) 
+        {
+            var result = await alarmRecordRepository.HandleRecord(record_id);
+            if (!result)
+            {
+                throw new ServerException("报警记录不存在！");
+            }
+            unitOfWork.Commit();
             return result;
         }
     }

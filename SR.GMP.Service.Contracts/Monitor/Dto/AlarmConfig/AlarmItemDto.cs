@@ -43,5 +43,17 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig
         /// 报警规则描述
         /// </summary>
         public string RULE { get; set; }
+
+        /// <summary>
+        /// 项目规则列表
+        /// </summary>
+        public List<AlarmItemRuleDto> RuleList { get; set; }
+
+        public AlarmItemDto() 
+        {
+            RuleList = new List<AlarmItemRuleDto>();
+        }
     }
+
+
 }

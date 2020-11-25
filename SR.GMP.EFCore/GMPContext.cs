@@ -48,6 +48,17 @@ namespace SR.GMP.EFCore
 
             modelBuilder.Entity<GMP_ALARM_RECORD_DATA>().HasKey(t => new { t.ALARM_RECORD_ID, t.MONITOR_ITEM_CODE });
 
+            modelBuilder.Entity<GMP_MONITOR_ITEM>().HasData(
+                new GMP_MONITOR_ITEM { ID = 1, ITEM_NAME = "静脉压", ITEM_CODE = "VENOUS_PRESSURE" },
+                new GMP_MONITOR_ITEM { ID = 2, ITEM_NAME = "动脉压", ITEM_CODE = "ARTERIAL_PRESSURE" },
+                new GMP_MONITOR_ITEM { ID = 3, ITEM_NAME = "跨膜压", ITEM_CODE = "TRANS_PRESSURE" },
+                new GMP_MONITOR_ITEM { ID = 4, ITEM_NAME = "血流量", ITEM_CODE = "BLOOD_FLOW" },
+                new GMP_MONITOR_ITEM { ID = 5, ITEM_NAME = "体温", ITEM_CODE = "BODY_TEMPERATURE" },
+                new GMP_MONITOR_ITEM { ID = 6, ITEM_NAME = "收缩压", ITEM_CODE = "SYSTOLIC_BLOOD_PRESSURE" },
+                new GMP_MONITOR_ITEM { ID = 7, ITEM_NAME = "舒张压", ITEM_CODE = "STRETCH_PRESSURE" },
+                new GMP_MONITOR_ITEM { ID = 8, ITEM_NAME = "心率", ITEM_CODE = "HEART_RATE" },
+                new GMP_MONITOR_ITEM { ID = 9, ITEM_NAME = "电导率", ITEM_CODE = "ELECTRICAL_CONDUCTIVITY" });
+
             #region 监控首页视图
             modelBuilder.Entity<MonitorViewData>(entity =>
             {

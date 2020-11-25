@@ -29,7 +29,7 @@ namespace SR.GMP.API.Filter
                 Request.Body.Position = 0;
                 using (var reader = new StreamReader(context.HttpContext.Request.Body, Encoding.UTF8, true, 1024, true))
                 {
-                    requestBody = reader.ReadToEnd();
+                    requestBody = reader.ReadToEndAsync().Result;
                 }
             }
             _logger.LogInformation(context.Exception, "\r\n Method：{Method} \r\n Path：{Path} \r\n Query：{Query} \r\n Body：{Body} \r\n",

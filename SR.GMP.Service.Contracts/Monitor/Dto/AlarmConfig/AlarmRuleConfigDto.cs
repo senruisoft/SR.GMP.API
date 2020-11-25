@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SR.GMP.Service.Contracts.Base;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig
 {
-    public class AlarmItemRuleConfigDto
+    public class AlarmRuleConfigDto : EntityDto<Guid>
     {
         /// <summary>
         /// 最大值

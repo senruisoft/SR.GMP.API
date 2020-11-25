@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SR.GMP.DataEntity.Alarm;
+using SR.GMP.DataEntity.DictEnum;
 using SR.GMP.DataEntity.Dictionary;
 using SR.GMP.EFCore;
 using System;
@@ -7,25 +8,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SR.GMP.Infrastructure.Repositories.Alarm
 {
     public class AlarmRecordRepository : Repository<GMP_ALARM_RECORD, Guid>, IAlarmRecordRepository
     {
-        IRepository<GMP_EVENT_ITEM, int> eventItemRepository;
-        IRepository<GMP_MONITOR_ITEM, int> monitorItemRepository;
 
         public AlarmRecordRepository(GMPContext context) : base(context)
         {
         }
 
-        public void GetAlarmRecord(Expression<Func<GMP_ALARM_RECORD, bool>> query)
+        /// <summary>
+        /// 处理报警记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> HandleRecord(Guid id)
         {
-            this.GetQueryable(query).Include(x => x.ALARM_RECORD_DATA_LIST).Select(x => new 
+            var entity = await FindAsync(id);
+            if (entity == null) 
             {
-
-            });
-            
+                return false;
+            }
+            entity.STATE = AlarmStateEnum.已处理;
+            entity.HANDLE_TIME = DateTime.Now;
+            return true;
         }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SR.GMP.EFCore;
 
 namespace SR.GMP.EFCore.Migrations
 {
     [DbContext(typeof(GMPContext))]
-    partial class GMPContextModelSnapshot : ModelSnapshot
+    [Migration("20201105054742_addtable")]
+    partial class addtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,71 +325,6 @@ namespace SR.GMP.EFCore.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("GMP_MONITOR_ITEM");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            ITEM_CODE = "VENOUS_PRESSURE",
-                            ITEM_NAME = "静脉压",
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = 2,
-                            ITEM_CODE = "ARTERIAL_PRESSURE",
-                            ITEM_NAME = "动脉压",
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = 3,
-                            ITEM_CODE = "TRANS_PRESSURE",
-                            ITEM_NAME = "跨膜压",
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = 4,
-                            ITEM_CODE = "BLOOD_FLOW",
-                            ITEM_NAME = "血流量",
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = 5,
-                            ITEM_CODE = "BODY_TEMPERATURE",
-                            ITEM_NAME = "体温",
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = 6,
-                            ITEM_CODE = "SYSTOLIC_BLOOD_PRESSURE",
-                            ITEM_NAME = "收缩压",
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = 7,
-                            ITEM_CODE = "STRETCH_PRESSURE",
-                            ITEM_NAME = "舒张压",
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = 8,
-                            ITEM_CODE = "HEART_RATE",
-                            ITEM_NAME = "心率",
-                            STATE = 1
-                        },
-                        new
-                        {
-                            ID = 9,
-                            ITEM_CODE = "ELECTRICAL_CONDUCTIVITY",
-                            ITEM_NAME = "电导率",
-                            STATE = 1
-                        });
                 });
 
             modelBuilder.Entity("SR.GMP.DataEntity.System.SYS_DICT_CATEGORY", b =>

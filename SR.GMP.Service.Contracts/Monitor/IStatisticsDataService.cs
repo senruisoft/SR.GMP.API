@@ -37,5 +37,12 @@ namespace SR.GMP.Service.Contracts.Monitor
         /// <param name="cent_id">中心ID</param>
         /// <param name="type">查询类型</param>
         Task<StatsInfo> GetNewPatientInfo(Guid cent_id, int type);
+
+        /// <summary>
+        /// 处理报警记录
+        /// </summary>
+        /// <param name="record_id">记录主键</param>
+        /// <returns></returns>
+        Task<bool> HandleAlarmRecord(Guid record_id);
     }
 }

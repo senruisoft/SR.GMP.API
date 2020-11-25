@@ -47,12 +47,13 @@ namespace SR.GMP.API.Filter
                 Request.Body.Position = 0;
                 using (var reader = new StreamReader(context.HttpContext.Request.Body, Encoding.UTF8, true, 1024, true))
                 {
-                    requestBody = reader.ReadToEnd();
+                    requestBody = reader.ReadToEndAsync().Result;
                 }
             }
             _logger.LogError(context.Exception, "\r\n Method：{Method} \r\n Path：{Path} \r\n Query：{Query}  \r\n Body：{Body} \r\n Error：{Error} \r\n",
                Request.Method, Request.Path, Request.QueryString, requestBody, context.Exception);
-            context.Result = new JsonResult(ApiResult.GetError(ApiResultCode.DATA_IS_WRONG, context.Exception.Message))
+            context.Result = new JsonResult(ApiResult.GetError(ApiResultCode.DATA_IS_WRONG, context.Exception.Message +
+                (context.Exception.InnerException == null ? "" : context.Exception.InnerException.Message)))
             {
                 ContentType = "application/json; charset=utf-8"
             };

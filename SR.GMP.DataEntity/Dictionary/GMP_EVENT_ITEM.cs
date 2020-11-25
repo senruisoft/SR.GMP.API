@@ -3,6 +3,7 @@ using SR.GMP.DataEntity.DictEnum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SR.GMP.DataEntity.Dictionary
@@ -13,6 +14,9 @@ namespace SR.GMP.DataEntity.Dictionary
         {
             STATE = StateEnum.启用;
         }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public override int ID { get => base.ID; set => base.ID = value; }
 
         /// <summary>
         /// 项目名称

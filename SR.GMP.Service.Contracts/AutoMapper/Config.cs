@@ -28,8 +28,17 @@ namespace SR.GMP.Service.Contracts.AutoMapper
             CreateMap<MonitorDataView, MonitorDataDto>();
             CreateMap<TreatOrderView, TreatOrderDto>();
 
-            CreateMap<GMP_ALARM_ITEM, AlarmItemDto>().ReverseMap();
-            CreateMap<AlarmItemCreatInput, GMP_ALARM_ITEM>();
+            CreateMap<GMP_ALARM_ITEM, AlarmItemDto>()
+                 .ForMember(d => d.RuleList, opt => { opt.MapFrom(s => s.ALARM_ITEM_RULE_LIST); });
+            CreateMap<GMP_ALARM_ITEM_RULE, AlarmItemRuleDto>()
+                .ForMember(d => d.ConfigList, opt => { opt.MapFrom(s => s.ALARM_RULE_CONFIG_LIST); });
+            CreateMap<GMP_ALARM_RULE_CONFIG, AlarmRuleConfigDto>();
+            CreateMap<AlarmItemCreatInput, GMP_ALARM_ITEM>()
+                .ForMember(d => d.ALARM_ITEM_RULE_LIST, opt => { opt.MapFrom(s => s.RuleList); });
+            CreateMap<ItemRuleCreatInput, GMP_ALARM_ITEM_RULE>()
+               .ForMember(d => d.ALARM_RULE_CONFIG_LIST, opt => { opt.MapFrom(s => s.ConfigList); });
+            CreateMap<RuleConfigCreatInput, GMP_ALARM_RULE_CONFIG>();
+
             CreateMap<GMP_ALARM_RECORD, AlarmRecordDto>()
                  .ForMember(d => d.RECORD_DATA_LIST, opt => { opt.MapFrom(s => s.ALARM_RECORD_DATA_LIST); });
             CreateMap<GMP_ALARM_RECORD_DATA, AlarmRecordDataDto>();

@@ -65,6 +65,18 @@ namespace SR.GMP.API.Controllers.Monitor
         {
             return await dataService.GetNewPatientInfo(cent_id, type);
         }
+
+
+        /// <summary>
+        /// 处理报警记录
+        /// </summary>
+        /// <param name="record_id">记录主键</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<bool> HandleAlarmRecord(Guid record_id)
+        {
+            return await dataService.HandleAlarmRecord(record_id);
+        }
     }
 
 }

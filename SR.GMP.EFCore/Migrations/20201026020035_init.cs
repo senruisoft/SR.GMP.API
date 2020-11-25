@@ -596,8 +596,8 @@ namespace SR.GMP.EFCore.Migrations
                    CONVERT(decimal(8, 2), a.HEART_RATE) AS HEART_RATE, CONVERT(decimal(8, 2), a.ELECTRICAL_CONDUCTIVITY) 
                    AS ELECTRICAL_CONDUCTIVITY, CONVERT(decimal(8, 2), a.KTV) AS ktv
                 FROM    {TDMS_DataBaseName}.dbo.HD_PATIENT AS b  JOIN
-                   {TDMS_DataBaseName}.dbo.HD_MONITORING_RECORD AS a ON a.PATIENT_ID = b.ID  JOIN
-                   {TDMS_DataBaseName}.dbo.HD_TREATMENT AS e ON e.ID = a.TREATMENT_ID  JOIN
+                   {TDMS_DataBaseName}.dbo.HD_TREATMENT AS e ON e.PATIENT_ID = b.ID INNER JOIN
+                   {TDMS_DataBaseName}.dbo.HD_DEVICE_TREAT_DATA AS a ON a.TREATMENT_ID = e.ID INNER JOIN
 				   {TDMS_DataBaseName}.dbo.HD_SCHEDULING as f on e.SCHEDULING_ID = f.ID join
 				   {TDMS_DataBaseName}.dbo.HD_SCHEDULING_CLASS as g on g.ID = f.SCHEDULING_CLASS
             ");
