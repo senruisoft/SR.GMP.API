@@ -37,6 +37,11 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.AlarmConfig
         public Guid CENT_ID { get; set; }
 
         public List<ItemRuleCreatInput> RuleList { get; set; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public StateEnum STATE { get; set; }
     }
 
     public class ItemRuleCreatInput

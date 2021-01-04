@@ -572,7 +572,7 @@ namespace SR.GMP.EFCore.Migrations
                 join {TDMS_DataBaseName}.dbo.HD_SCHEDULING_CLASS sche_class on sche_class.ID = sche.SCHEDULING_CLASS
                 join   {TDMS_DataBaseName}.dbo.HD_TREATMENT treat on  sche.ID = treat.SCHEDULING_ID
                 join  {TDMS_DataBaseName}.dbo.HD_DIALYSIS_EVENT dia_event on treat.ID = dia_event.TREATMENT_ID
-                where [EVENT_RESULT] is not null
+                where [EVENT_RESULT] is null
             ");
 
             migrationBuilder.Sql(@$"

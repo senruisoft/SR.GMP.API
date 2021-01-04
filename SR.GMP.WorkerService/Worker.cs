@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -17,13 +18,16 @@ namespace SR.GMP.WorkerService
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private DateTime checkTime;
         IJob _job;
+        int taskInterval;
 
-        public Worker(ILogger<Worker> logger, IServiceScopeFactory serviceScopeFactory, IJob job)
+        public Worker(ILogger<Worker> logger, IServiceScopeFactory serviceScopeFactory, IJob job, IConfiguration configuration)
         {
             _logger = logger;
             _serviceScopeFactory = serviceScopeFactory;
             _job = job;
             checkTime = DateTime.Now;
+
+            taskInterval = int.Parse(configuration["Worker:TaskInterval"]);
         }
 
         //重写BackgroundService.StartAsync方法，在开始服务的时候，执行一些处理逻辑
@@ -57,7 +61,7 @@ namespace SR.GMP.WorkerService
                 {
                     _logger.LogError(ex.Message);
                 }
-                await Task.Delay(50000, stoppingToken);
+                await Task.Delay(taskInterval, stoppingToken);
             }
         }
     }

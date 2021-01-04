@@ -22,4 +22,4 @@ join  HDIS_DEV.dbo.HD_SCHEDULING sche   on  patient.id = sche.PATIENT_ID
 join HDIS_DEV.dbo.HD_SCHEDULING_CLASS sche_class on sche_class.ID = sche.SCHEDULING_CLASS
 join   HDIS_DEV.dbo.HD_TREATMENT treat on  sche.ID = treat.SCHEDULING_ID
 join  HDIS_DEV.dbo.HD_DIALYSIS_EVENT dia_event on treat.ID = dia_event.TREATMENT_ID
-where [EVENT_RESULT] is not null
+where [EVENT_RESULT] is null
