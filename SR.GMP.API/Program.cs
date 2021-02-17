@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 using SR.GMP.EFCore;
@@ -20,18 +16,18 @@ namespace SR.GMP.API
     {
         public static void Main(string[] args)
         {
-            #region SeriLogÅäÖÃ
+            #region SeriLogï¿½ï¿½ï¿½ï¿½
             var LogRoot = Path.Combine(AppContext.BaseDirectory, "Logs/error/log.txt");
             Log.Logger = new LoggerConfiguration()
                       .MinimumLevel.Information()
                       .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
-                      .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning) // ½µµÍEFÈÕÖ¾¼¶±ð
+                      .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning) // ï¿½ï¿½ï¿½ï¿½EFï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½
                       .Enrich.FromLogContext()
-                      // Ð´ErrorÈÕÖ¾
+                      // Ð´Errorï¿½ï¿½Ö¾
                       .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Error).WriteTo.Async(config => config.File(Path.Combine(AppContext.BaseDirectory, "Logs/error/log.txt"),
                        outputTemplate: "{Timestamp:HH:mm} || {Level} || {SourceContext:l} || {Message} || end {NewLine}",
                        rollingInterval: RollingInterval.Day)))
-                       // Ð´InformationÈÕÖ¾
+                       // Ð´Informationï¿½ï¿½Ö¾
                        .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Information).WriteTo.Async(config => config.File(Path.Combine(AppContext.BaseDirectory, "Logs/info/log.txt"),
                        outputTemplate: "{Timestamp:HH:mm} || {Level} || {SourceContext:l} || {Message} || end {NewLine}",
                        rollingInterval: RollingInterval.Day)))
@@ -41,7 +37,7 @@ namespace SR.GMP.API
             {
                 var host = CreateHostBuilder(args).Build();
 
-                #region EF×Ô¶¯Ç¨ÒÆ
+                #region EFï¿½Ô¶ï¿½Ç¨ï¿½ï¿½
                 using (var scope = host.Services.CreateScope())
                 {
                     var dbcontext = scope.ServiceProvider.GetRequiredService<GMPContext>();
