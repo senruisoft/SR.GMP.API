@@ -133,6 +133,13 @@ namespace SR.GMP.EFCore
                 entity.HasNoKey();
                 entity.ToView("view_TreatOrderInfo");
             });
+
+            modelBuilder.Entity<PadPoliceView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_PadPoliceInfo");
+            });
+
             #endregion
         }
 

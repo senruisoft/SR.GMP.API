@@ -40,11 +40,21 @@ namespace SR.GMP.Service.Contracts.AutoMapper
             CreateMap<RuleConfigCreatInput, GMP_ALARM_RULE_CONFIG>();
 
             CreateMap<GMP_ALARM_RECORD, AlarmRecordDto>()
-                 .ForMember(d => d.RECORD_DATA_LIST, opt => { opt.MapFrom(s => s.ALARM_RECORD_DATA_LIST); });
+                .ForMember(d => d.IS_AUTO, opt => opt.MapFrom(s => true))
+                .ForMember(d => d.RECORD_DATA_LIST, opt => { opt.MapFrom(s => s.ALARM_RECORD_DATA_LIST); });
             CreateMap<GMP_ALARM_RECORD_DATA, AlarmRecordDataDto>();
 
             CreateMap<SYS_INST_CENTER, CenterDto>().ReverseMap();
             CreateMap<CenterInput, SYS_INST_CENTER>();
+
+            CreateMap<PadPoliceView, AlarmRecordDto>()
+               .ForMember(d => d.PATIENT_EXT_ID, opt => opt.MapFrom(s => s.PATIENT_ID))
+               .ForMember(d => d.PATIENT_NAME, opt => opt.MapFrom(s => s.PATIENT_NAME))
+               .ForMember(d => d.ALARM_ITEM_NAME, opt => opt.MapFrom(s => s.POLICE_TYPE))
+               .ForMember(d => d.PRIORITY, opt => opt.MapFrom(s => DataEntity.DictEnum.PriorityEnum.高))
+               .ForMember(d => d.STATE, opt => opt.MapFrom(s => DataEntity.DictEnum.AlarmStateEnum.未处理))
+               .ForMember(d => d.IS_AUTO, opt => opt.MapFrom(s => false))
+               .ForMember(d => d.RECORD_DATA_LIST, opt => opt.MapFrom(s => new List<AlarmRecordDataDto>()));
         }
     }
 }

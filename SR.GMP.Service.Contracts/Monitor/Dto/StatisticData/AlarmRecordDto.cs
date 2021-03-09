@@ -77,6 +77,31 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         public string CLASS_NAME { get; set; }
 
         /// <summary>
+        /// 是否自动报警
+        /// </summary>
+        public bool IS_AUTO { get; set; }
+
+        /// <summary>
+        /// 报警模块类型
+        /// </summary>
+        public string POLICE_TYPE { get; set; }
+
+        /// <summary>
+        /// 报警名称
+        /// </summary>
+        public string POLICE_TITLE { get; set; }
+
+        /// <summary>
+        /// 报警描述
+        /// </summary>
+        public string POLICE_DESCRIPTION { get; set; }
+
+        /// <summary>
+        /// 治疗ID
+        /// </summary>
+        public string TREATMENT_ID { get; set; }
+
+        /// <summary>
         /// 报警监测数据
         /// </summary>
         public List<AlarmRecordDataDto> RECORD_DATA_LIST { get; set; }

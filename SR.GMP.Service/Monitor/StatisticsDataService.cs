@@ -92,6 +92,12 @@ namespace SR.GMP.Service.Monitor
             var alarm_record = await dbcontext.GMP_ALARM_RECORD.Where(x => x.CENT_ID == cent_id 
                 && x.DATA_RECORD_TIME >= DateTime.Now.Date).Include(x => x.ALARM_RECORD_DATA_LIST).OrderByDescending(x => x.PRIORITY).ToListAsync();
             var alarm_list = _mapper.Map<List<GMP_ALARM_RECORD>, List<AlarmRecordDto>>(alarm_record);
+
+            //查询今天Pad的报警记录
+            var pad_alarm_record = await dbcontext.Set<PadPoliceView>().Where(i => i.CENT_ID == center.EXT_ID && i.CREATE_AT >= DateTime.Now.Date).ToListAsync();
+            var pad_alarm_list = _mapper.Map<List<PadPoliceView>, List<AlarmRecordDto>>(pad_alarm_record);
+            pad_alarm_list.ForEach(i => alarm_list.Add(i));
+
             // 查询报警规则信息
             var alarm_items = alarmRepository.GetAlarmItemsInfo(cent_id, alarm_record.Select(x => x.ALARM_ITEM_ID).Distinct().ToList());
 

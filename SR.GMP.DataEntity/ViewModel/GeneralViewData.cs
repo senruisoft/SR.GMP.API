@@ -439,4 +439,60 @@ namespace SR.GMP.DataEntity.ViewModel
         /// </summary>
         public string EXEC_USER { get; set; }
     }
+
+    /// <summary>
+    /// Pad手动报警数据
+    /// </summary>
+    public class PadPoliceView
+    {
+        /// <summary>
+        /// 患者ID
+        /// </summary>
+        public string PATIENT_ID { get; set; }
+        /// <summary>
+        /// 患者姓名
+        /// </summary>
+        public string PATIENT_NAME { get; set; }
+        /// <summary>
+        /// 治疗ID
+        /// </summary>
+        public string TREATMENT_ID { get; set; }
+        /// <summary>
+        /// 报警模块类型
+        /// </summary>
+        public string POLICE_TYPE { get; set; }
+        /// <summary>
+        /// 报警名称
+        /// </summary>
+        public string POLICE_TITLE { get; set; }
+        /// <summary>
+        /// 报警描述
+        /// </summary>
+        public string POLICE_DESCRIPTION { get; set; }
+        /// <summary>
+        /// 状态 1 生效警报 0 失效警报（被移除的）
+        /// </summary>
+        public int STATE { get; set; }
+        /// <summary>
+        /// 创建人ID
+        /// </summary>
+        public string CREATE_USER_ID { get; set; }
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        public string CREATE_USER_NAME { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CREATE_AT { get; set; }
+        /// <summary>
+        /// 中心ID
+        /// </summary>
+        public string CENT_ID { get; set; }
+        /// <summary>
+        /// 机构ID
+        /// </summary>
+        public string INST_ID { get; set; }
+    }
+
 }
