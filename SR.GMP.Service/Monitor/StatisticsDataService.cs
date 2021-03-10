@@ -84,6 +84,8 @@ namespace SR.GMP.Service.Monitor
             {
                 throw new ServerException("中心信息错误！");
             }
+            var centName = await dbcontext.SYS_INST_CENTER.Where(x => x.ID == cent_id).Select(x => x.NAME).FirstOrDefaultAsync();
+
             // 视图数据
             var viewData = await dbcontext.Set<OnlineTreatmentStatsView>().Where(x => x.CENT_ID == center.EXT_ID).OrderBy(x => x.SortNum).ToListAsync();
             var treatment_stats = _mapper.Map<List<OnlineTreatmentStatsView>, List<OnlineTreatmentStatsInfo>>(viewData);
@@ -121,7 +123,7 @@ namespace SR.GMP.Service.Monitor
                                    }).ToList();
                 item.AlarmTotalCount = item.AlarmItems.Sum(x => x.AlarmCount);
             }
-            var result = new OnlineStatsInfo(treatment_stats, alarm_list, alarm_items);
+            var result = new OnlineStatsInfo(treatment_stats, alarm_list, alarm_items, centName);
             return result;
         }
 

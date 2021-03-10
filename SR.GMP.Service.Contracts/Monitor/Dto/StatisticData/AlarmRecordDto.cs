@@ -102,6 +102,11 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         public string TREATMENT_ID { get; set; }
 
         /// <summary>
+        /// 创建人
+        /// </summary>
+        public string CREATE_USER_NAME { get; set; }
+
+        /// <summary>
         /// 报警监测数据
         /// </summary>
         public List<AlarmRecordDataDto> RECORD_DATA_LIST { get; set; }

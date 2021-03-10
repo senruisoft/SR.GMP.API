@@ -73,12 +73,13 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
     /// </summary>
     public class OnlineStatsInfo 
     {
-        public OnlineStatsInfo(List<OnlineTreatmentStatsInfo> treatment_stats, List<AlarmRecordDto> alarm_list, List<AlarmItemDto> alarm_items)
+        public OnlineStatsInfo(List<OnlineTreatmentStatsInfo> treatment_stats, List<AlarmRecordDto> alarm_list, List<AlarmItemDto> alarm_items,string centName)
         {
             searchTime = DateTime.Now;
             this.treatment_stats = treatment_stats;
             this.alarm_list = alarm_list;
             this.alarm_items = alarm_items;
+            CentName = centName;
             if (treatment_stats != null) 
             {
                 CompleteCount = treatment_stats.Sum(x => x.CompleteCount);
@@ -121,5 +122,10 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// 治疗总人数
         /// </summary>
         public int TotalCount { get; set; }
+
+        /// <summary>
+        /// 中心名称
+        /// </summary>
+        public string CentName { get; set; }
     }
 }
