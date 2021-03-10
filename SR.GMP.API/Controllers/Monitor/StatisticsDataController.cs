@@ -77,6 +77,17 @@ namespace SR.GMP.API.Controllers.Monitor
         {
             return await dataService.HandleAlarmRecord(record_id);
         }
+
+        /// <summary>
+        /// 获取手动报警文件列表
+        /// </summary>
+        /// <param name="police_id">报警主键</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<List<PoliceFileOutput>> GetPoliceFileAsync(string police_id)
+        {
+            return await dataService.GetPoliceFileAsync(police_id);
+        }
     }
 
 }

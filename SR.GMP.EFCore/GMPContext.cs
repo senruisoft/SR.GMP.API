@@ -140,6 +140,12 @@ namespace SR.GMP.EFCore
                 entity.ToView("view_PadPoliceInfo");
             });
 
+            modelBuilder.Entity<PadPoliceFileView>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView("view_PadPoliceFileInfo");
+            });
+
             #endregion
         }
 

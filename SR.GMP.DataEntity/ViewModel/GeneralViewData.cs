@@ -445,6 +445,7 @@ namespace SR.GMP.DataEntity.ViewModel
     /// </summary>
     public class PadPoliceView
     {
+        public string ID { get; set; }
         /// <summary>
         /// 患者ID
         /// </summary>
@@ -453,6 +454,22 @@ namespace SR.GMP.DataEntity.ViewModel
         /// 患者姓名
         /// </summary>
         public string PATIENT_NAME { get; set; }
+        /// <summary>
+        /// 患者年龄
+        /// </summary>
+        public int PATIENT_AGE { get; set; }
+        /// <summary>
+        /// 患者性别
+        /// </summary>
+        public string PATIENT_SEX { get; set; }
+        /// <summary>
+        /// 床位
+        /// </summary>
+        public string BED_LABEL { get; set; }
+        /// <summary>
+        /// 班次
+        /// </summary>
+        public string CLASS_NAME { get; set; }
         /// <summary>
         /// 治疗ID
         /// </summary>
@@ -493,6 +510,24 @@ namespace SR.GMP.DataEntity.ViewModel
         /// 机构ID
         /// </summary>
         public string INST_ID { get; set; }
+    }
+    /// <summary>
+    /// Pad报警附件内容
+    /// </summary>
+    public class PadPoliceFileView
+    {
+        /// <summary>
+        ///文件ID
+        /// </summary>
+        public string ID { get; set; }
+        /// <summary>
+        /// 警报ID
+        /// </summary>
+        public string POLICE_ID { get; set; }
+        /// <summary>
+        /// 文件内容 base64存储
+        /// </summary>
+        public string FILE_CONTENT { get; set; }
     }
 
 }

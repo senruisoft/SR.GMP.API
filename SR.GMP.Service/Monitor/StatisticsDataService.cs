@@ -183,5 +183,25 @@ namespace SR.GMP.Service.Monitor
             unitOfWork.Commit();
             return result;
         }
+
+        /// <summary>
+        /// 获取手动报警文件列表
+        /// </summary>
+        /// <param name="police_id"></param>
+        /// <returns></returns>
+        public async Task<List<PoliceFileOutput>> GetPoliceFileAsync(string police_id)
+        {
+            var result = await dbcontext
+                .Set<PadPoliceFileView>()
+                .Where(x => x.POLICE_ID == police_id)
+                .Select(x => new PoliceFileOutput() { 
+                    ID = x.ID, 
+                    POLICE_ID = x.POLICE_ID, 
+                    FILE_CONTENT = x.FILE_CONTENT 
+                })
+                .ToListAsync();
+            return result;
+        }
+
     }
 }

@@ -44,5 +44,12 @@ namespace SR.GMP.Service.Contracts.Monitor
         /// <param name="record_id">记录主键</param>
         /// <returns></returns>
         Task<bool> HandleAlarmRecord(Guid record_id);
+
+        /// <summary>
+        /// 获取手动报警文件列表
+        /// </summary>
+        /// <param name="police_id">报警主键</param>
+        /// <returns></returns>
+        Task<List<PoliceFileOutput>> GetPoliceFileAsync(string police_id);
     }
 }

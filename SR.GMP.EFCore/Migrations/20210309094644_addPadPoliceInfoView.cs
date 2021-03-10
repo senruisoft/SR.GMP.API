@@ -18,10 +18,17 @@ namespace SR.GMP.EFCore.Migrations
             migrationBuilder.Sql(@$"
                 CREATE VIEW [dbo].[view_PadPoliceInfo]
                 AS
-                SELECT   PATIENT_ID, PATIENT_NAME, TREATMENT_ID, POLICE_TYPE, POLICE_TITLE, POLICE_DESCRIPTION, STATE, 
-                                CREATE_USER_ID, CREATE_USER_NAME, CREATE_AT, CENT_ID, INST_ID
-                FROM     {TDMS_DataBaseName}.dbo.HD_TREATMENT_POLICE
+                SELECT   ID,PATIENT_ID, PATIENT_NAME, TREATMENT_ID, POLICE_TYPE, POLICE_TITLE, POLICE_DESCRIPTION, STATE, 
+                                CREATE_USER_ID, CREATE_USER_NAME, CREATE_AT, CENT_ID, INST_ID, [PATIENT_AGE], [PATIENT_SEX], [BED_LABEL], [CLASS_NAME]
+                FROM     {TDMS_DataBaseName}.dbo.HD_TREATMENT_POLICE h
                 WHERE   (STATE = 1)
+            ");
+
+            migrationBuilder.Sql(@$"
+                CREATE VIEW [dbo].[view_PadPoliceFileInfo]
+                AS
+                SELECT   ID, POLICE_ID, FILE_CONTENT
+                FROM      {TDMS_DataBaseName}.dbo.HD_TREATMENT_POLICE_FILE
             ");
         }
 
