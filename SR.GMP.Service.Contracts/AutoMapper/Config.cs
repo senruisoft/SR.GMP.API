@@ -51,6 +51,7 @@ namespace SR.GMP.Service.Contracts.AutoMapper
                .ForMember(d => d.PATIENT_EXT_ID, opt => opt.MapFrom(s => s.PATIENT_ID))
                .ForMember(d => d.PATIENT_NAME, opt => opt.MapFrom(s => s.PATIENT_NAME))
                .ForMember(d => d.ALARM_ITEM_NAME, opt => opt.MapFrom(s => s.POLICE_TYPE))
+               .ForMember(d => d.DATA_RECORD_TIME, opt => opt.MapFrom(s => s.CREATE_AT))
                .ForMember(d => d.PRIORITY, opt => opt.MapFrom(s => DataEntity.DictEnum.PriorityEnum.高))
                .ForMember(d => d.STATE, opt => opt.MapFrom(s => DataEntity.DictEnum.AlarmStateEnum.未处理))
                .ForMember(d => d.IS_AUTO, opt => opt.MapFrom(s => false))
