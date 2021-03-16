@@ -101,7 +101,7 @@ namespace SR.GMP.Service.Monitor
             pad_alarm_list.ForEach(i => alarm_list.Add(i));
 
             // 查询报警规则信息
-            var alarm_items = alarmRepository.GetAlarmItemsInfo(cent_id, alarm_record.Select(x => x.ALARM_ITEM_ID).Distinct().ToList());
+            var alarm_items = alarmRepository.GetAlarmItemsInfo(cent_id, alarm_list.Select(x => x.ALARM_ITEM_ID).Distinct().ToList());
 
             // 报警配置项目
             var alarmItems = dbcontext.GMP_ALARM_ITEM.Where(x => x.CENT_ID == cent_id && x.STATE == StateEnum.启用).OrderByDescending(x => x.PRIORITY).Select(x => new
