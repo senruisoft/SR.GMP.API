@@ -55,7 +55,7 @@ namespace SR.GMP.WorkerService.WorkerJob
 
         public void Check(SYS_INST_CENTER center, DateTime LastCheckTime)
         {
-            //LastCheckTime = new DateTime(2020,11, 3);
+            //LastCheckTime = new DateTime(2021,3, 15);
             using var scope = _serviceScopeFactory.CreateScope();
             using (var dbcontext = scope.ServiceProvider.GetRequiredService<GMPContext>())
             {
@@ -150,7 +150,8 @@ namespace SR.GMP.WorkerService.WorkerJob
                     if (RecordDataList.Count > 0)
                     {
                         var monitorRule = item.ALARM_ITEM_RULE_LIST.Where(x => x.RULE_TYPE == AlarmRuleEnum.监测数据).OrderBy(x => x.SORT_NUM).ToList();
-                        Func<MonitorRecordData, bool> condition = x => true;
+                        // Func<MonitorRecordData, bool> condition = x => true;
+                        Func<MonitorRecordData, bool> condition = null;
                         // 构造报警条件委托
                         monitorRule.ForEach(rule =>
                         {
@@ -203,21 +204,25 @@ namespace SR.GMP.WorkerService.WorkerJob
                                 }
                             });
                             // 组合逻辑
-                            switch (rule.LOGIC_TYPE)
+                            if (condition == null)
                             {
-                                case DataEntity.DictEnum.AlarmLogicEnum.and:
-                                    condition = x => tempFun(x) && role_condition(x);
-                                    break;
-                                case DataEntity.DictEnum.AlarmLogicEnum.or:
-                                    condition = x => 
-                                    {
-                                        var logic_result = role_condition(x);
-                                        return tempFun(x) || logic_result;
-                                    };
-                                    break;
+                                condition = x => role_condition(x);
                             }
+                            else
+                            {
+                                switch (rule.LOGIC_TYPE)
+                                {
+                                    case DataEntity.DictEnum.AlarmLogicEnum.and:
+                                        condition = x => tempFun(x) && role_condition(x);
+                                        break;
+                                    case DataEntity.DictEnum.AlarmLogicEnum.or:
+                                        condition = x => tempFun(x) || role_condition(x);
+                                        break;
+                                }
+                            }
+                            
                         });
-                        recordDataList = RecordDataList.Where(x => condition(x)).ToList();
+                        recordDataList = RecordDataList.Where(x => condition != null && condition(x)).ToList();
                     }
                     #endregion
 
