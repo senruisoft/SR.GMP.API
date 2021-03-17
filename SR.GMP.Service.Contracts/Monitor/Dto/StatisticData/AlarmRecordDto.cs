@@ -106,6 +106,26 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// </summary>
         public string CREATE_USER_NAME { get; set; }
 
+        ///// <summary>
+        ///// 携带相对应的处理措施
+        ///// </summary>
+        //public PadAlarmItem PAD_ALARM_ITEM { get; set; }
+
+        /// <summary>
+        /// 原因
+        /// </summary>
+        public string TREAT_MEASURE { get; set; }
+
+        /// <summary>
+        /// 处理流程
+        /// </summary>
+        public string TREAT_PROCESS { get; set; }
+
+        /// <summary>
+        /// 班次ID
+        /// </summary>
+        public string CLASS_ID { get; set; }
+
         /// <summary>
         /// 报警监测数据
         /// </summary>
@@ -138,5 +158,26 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// 数据项类型
         /// </summary>
         public AlarmRuleEnum RULE_TYPE { get; set; }
+    }
+
+    public class PadAlarmItem
+    {
+        /// <summary>
+        /// 报警项目ID
+        /// </summary>
+        public Guid ALARM_ITEM_ID { get; set; }
+        /// <summary>
+        /// 项目名称
+        /// </summary>
+        public string ITEM_NAME { get; set; }
+        /// <summary>
+        /// 原因
+        /// </summary>
+        public string TREAT_MEASURE { get; set; }
+
+        /// <summary>
+        /// 处理流程
+        /// </summary>
+        public string TREAT_PROCESS { get; set; }
     }
 }

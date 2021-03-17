@@ -77,7 +77,7 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         {
             searchTime = DateTime.Now;
             this.treatment_stats = treatment_stats;
-            this.alarm_list = alarm_list;
+            this.alarm_list = alarm_list.OrderByDescending(a=>a.DATA_RECORD_TIME).ToList();
             this.alarm_items = alarm_items;
             CentName = centName;
             if (treatment_stats != null) 

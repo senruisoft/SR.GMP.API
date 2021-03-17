@@ -101,7 +101,24 @@ namespace SR.GMP.Service.Monitor
             
             //获取报警项目信息
             pad_alarm_list.ForEach(i => {
-                i.ALARM_ITEM_ID = dbcontext.GMP_ALARM_ITEM.Where(a => a.ITEM_NAME == i.POLICE_TYPE).Select(a => a.ID).FirstOrDefault();
+                var alarmItem = dbcontext.GMP_ALARM_ITEM
+                .Where(a => a.ITEM_NAME == i.POLICE_TYPE)
+                .Select(a => new PadAlarmItem()
+                {
+                    ALARM_ITEM_ID = a.ID,
+                    ITEM_NAME = a.ITEM_NAME,
+                    TREAT_MEASURE = a.TREAT_MEASURE,
+                    TREAT_PROCESS = a.TREAT_PROCESS
+                })
+                .FirstOrDefault();
+
+                //未处理带出知识库内容
+                if (i.STATE == AlarmStateEnum.未处理 && alarmItem != null)
+                {
+                    i.TREAT_MEASURE = alarmItem.TREAT_MEASURE;
+                    i.TREAT_PROCESS = alarmItem.TREAT_PROCESS;
+                }
+                i.ALARM_ITEM_ID = alarmItem == null ? Guid.Empty : alarmItem.ALARM_ITEM_ID;
                 alarm_list.Add(i); 
             });
 
@@ -118,7 +135,7 @@ namespace SR.GMP.Service.Monitor
             foreach (var item in treatment_stats)
             {
                 item.AlarmItems = (from alarm in alarmItems
-                                   join record in alarm_record.Where(x => x.CLASS_ID == item.ClassID).GroupBy(x => x.ALARM_ITEM_ID)
+                                   join record in alarm_list.Where(x => x.CLASS_ID == item.ClassID).GroupBy(x => x.ALARM_ITEM_ID)
                                    on alarm.item_id equals record.Key into records
                                    from record in records.DefaultIfEmpty()
                                    select new ScheClassAlarmInfo

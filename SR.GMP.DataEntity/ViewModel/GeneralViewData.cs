@@ -487,7 +487,7 @@ namespace SR.GMP.DataEntity.ViewModel
         /// </summary>
         public string POLICE_DESCRIPTION { get; set; }
         /// <summary>
-        /// 状态 1 生效警报 0 失效警报（被移除的）
+        /// 状态 未处理 = 0, 处理中 = 1,  已处理 = 2, 移除 =999
         /// </summary>
         public int STATE { get; set; }
         /// <summary>
@@ -510,6 +510,20 @@ namespace SR.GMP.DataEntity.ViewModel
         /// 机构ID
         /// </summary>
         public string INST_ID { get; set; }
+        /// <summary>
+        /// 班次ID
+        /// </summary>
+        public string CLASS_ID { get; set; }
+        /// <summary>
+        /// 原因
+        /// </summary>
+        public string TREAT_MEASURE { get; set; }
+
+        /// <summary>
+        /// 处理流程
+        /// </summary>
+        public string TREAT_PROCESS { get; set; }
+
     }
     /// <summary>
     /// Pad报警附件内容
