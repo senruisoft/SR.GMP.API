@@ -102,7 +102,7 @@ namespace SR.GMP.Service.Monitor
             //获取报警项目信息
             pad_alarm_list.ForEach(i => {
                 var alarmItem = dbcontext.GMP_ALARM_ITEM
-                .Where(a => a.ITEM_NAME == i.POLICE_TYPE)
+                .Where(a => a.ITEM_NAME == i.POLICE_TYPE && a.STATE != StateEnum.删除)
                 .Select(a => new PadAlarmItem()
                 {
                     ALARM_ITEM_ID = a.ID,
