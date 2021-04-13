@@ -108,16 +108,23 @@ namespace SR.GMP.Service.Monitor
                     ALARM_ITEM_ID = a.ID,
                     ITEM_NAME = a.ITEM_NAME,
                     TREAT_MEASURE = a.TREAT_MEASURE,
-                    TREAT_PROCESS = a.TREAT_PROCESS
+                    TREAT_PROCESS = a.TREAT_PROCESS,
+                    PRIORITY = a.PRIORITY,
                 })
                 .FirstOrDefault();
 
                 //未处理带出知识库内容
-                if (i.STATE == AlarmStateEnum.未处理 && alarmItem != null)
+                if (i.STATE == AlarmStateEnum.未处理)
                 {
-                    i.TREAT_MEASURE = alarmItem.TREAT_MEASURE;
-                    i.TREAT_PROCESS = alarmItem.TREAT_PROCESS;
+                    i.PRIORITY = PriorityEnum.高;
+                    if(alarmItem != null)
+                    {
+                        i.TREAT_MEASURE = alarmItem.TREAT_MEASURE;
+                        i.TREAT_PROCESS = alarmItem.TREAT_PROCESS;
+                        i.PRIORITY = alarmItem.PRIORITY;
+                    }
                 }
+
                 i.ALARM_ITEM_ID = alarmItem == null ? Guid.Empty : alarmItem.ALARM_ITEM_ID;
                 alarm_list.Add(i); 
             });

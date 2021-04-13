@@ -127,6 +127,11 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         public string CLASS_ID { get; set; }
 
         /// <summary>
+        /// 备注
+        /// </summary>
+        public string REMARK { get; set; }
+
+        /// <summary>
         /// 报警监测数据
         /// </summary>
         public List<AlarmRecordDataDto> RECORD_DATA_LIST { get; set; }
@@ -179,5 +184,9 @@ namespace SR.GMP.Service.Contracts.Monitor.Dto.StatisticData
         /// 处理流程
         /// </summary>
         public string TREAT_PROCESS { get; set; }
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        public PriorityEnum PRIORITY { get; set; }
     }
 }

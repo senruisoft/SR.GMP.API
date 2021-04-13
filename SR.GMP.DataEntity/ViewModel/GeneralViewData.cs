@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SR.GMP.DataEntity.DictEnum;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -489,7 +490,7 @@ namespace SR.GMP.DataEntity.ViewModel
         /// <summary>
         /// 状态 未处理 = 0, 处理中 = 1,  已处理 = 2, 移除 =999
         /// </summary>
-        public int STATE { get; set; }
+        public AlarmStateEnum STATE { get; set; }
         /// <summary>
         /// 创建人ID
         /// </summary>
@@ -524,6 +525,15 @@ namespace SR.GMP.DataEntity.ViewModel
         /// </summary>
         public string TREAT_PROCESS { get; set; }
 
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        public PriorityEnum? PRIORITY { get; set; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string REMARK { get; set; }
     }
     /// <summary>
     /// Pad报警附件内容
